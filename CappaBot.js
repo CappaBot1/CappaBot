@@ -7,7 +7,7 @@ line()
 dotenv.config()
 const token = process.env.BOT_TOKEN
 console.log("Token: " + token)
-const apiVersion = "" // can be something like "v10/"
+const apiVersion = "v10/" // can be something like "v10/" or just blank ""
 
 // Headers with the bot token for authentification
 const headers = {
