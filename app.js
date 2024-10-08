@@ -1,11 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
-import {
-	InteractionType,
-	InteractionResponseType,
-	verifyKeyMiddleware,
-} from 'discord-interactions';
-import { getRandomEmoji, line } from './utils.js';
+import { verifyKeyMiddleware } from 'discord-interactions';
+import { line, pingCommand } from './utils.js';
 
 // Create an express app
 const app = express();
@@ -31,26 +27,36 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 	 * Handle slash command requests
 	 * See https://discord.com/developers/docs/interactions/application-commands#slash-commands
 	 */
-	if (type === 2) {
+	if (type == 2) {
 		const { name } = data;
 
 		// "ping" command
-		if (name === 'ping') {
-			// Send a message into the channel where command was triggered from
+		if (name == "ping") {
+			return pingCommand(res);
+		}
+
+		// "test" command
+		if (name == "test") {
 			return res.send({
-				type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+				type: 4,
 				data: {
-					// Reply with pong and a button to ping again
-					content: "Pong!",
+					// Reply with a message asking what to test
+					content: "What would you like to test?",
 					components: [
 						{
-							"type": 1,
-							"components": [
+							type: 1,
+							components: [
 								{
-									"type": 2,
-									"style": 1,
-									"label": "Again!",
-									"custom_id": "ping again"
+									type: 2,
+									style: 3,
+									label: "Message",
+									custom_id: "test message"
+								},
+								{
+									type: 2,
+									style: 3,
+									label: "Modal",
+									custom_id: "test modal"
 								}
 							]
 						}
@@ -58,33 +64,50 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 				}
 			});
 		}
-		
 
 		console.error(`unknown command: ${name}`);
 		return res.status(400).json({ error: 'unknown command' });
 	}
 
 	// Component interactions like clicking on a button
-	if (type === 3) {
+	else if (type == 3) {
 		const { custom_id } = data
-
+		// The ping again button
 		if (custom_id == "ping again") {
-			// Same code as above
-			// Send a message into the channel where command was triggered from
+			return pingCommand(res);
+		}
+
+		// Test message button
+		else if (custom_id == "test message") {
+			console.log("Testing message")
 			return res.send({
-				type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+				type: 4,
 				data: {
-					// Reply with pong and a button to ping again
-					content: "Pong!",
+					// Reply with a test message
+					content: "Yup, the test message worked"
+				}
+			});
+		}
+
+		// Test modal button
+		else if (custom_id == "test modal") {
+			return res.send({
+				type: 9,
+				data: {
+					// Reply with a test modal
+					title: "Yup, the test modal worked",
+					custom_id: "test modal submit",
 					components: [
 						{
-							"type": 1,
-							"components": [
+							type: 1,
+							components: [
 								{
-									"type": 2,
-									"style": 1,
-									"label": "Again!",
-									"custom_id": "ping again"
+									type: 4,
+									custom_id: "test text input",
+									label: "Test text",
+									style: 1,
+									placeholder: "Yeah, it worked",
+									required: true
 								}
 							]
 						}
@@ -92,6 +115,31 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 				}
 			});
 		}
+
+		console.error(`unknown customID: ${custom_id}`);
+		return res.status(400).json({ error: 'unknown customID' });
+	}
+
+	// Modal submits
+	else if (type == 5) {
+		const { custom_id, components } = data
+
+		let component = components[0].components
+
+		// The testing modal
+		if (custom_id == "test modal submit") {
+			// Send a message with what they inputted into the test text input
+			return res.send({
+				type: 4,
+				data: {
+					// Reply with a message asking what to test
+					content: "Test text inputted in modal: " + component[0].value,
+				}
+			});
+		}
+
+		console.error(`unknown customID: ${custom_id}`);
+		return res.status(400).json({ error: 'unknown customID' });
 	}
 
 	console.error('unknown interaction type', type);
