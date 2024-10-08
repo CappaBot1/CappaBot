@@ -1,6 +1,6 @@
 import 'dotenv/config';
-import { DiscordRequest } from './utils.js';
+import { DiscordRequest, getReactionImage } from './utils.js';
 
 console.log("Main is running...")
 
-await DiscordRequest("get", `/applications/${process.env.APP_ID}/commands`, null, true)
+await DiscordRequest("post", `/channels/1235783364204822580/messages`, {content: await getReactionImage()}, true)

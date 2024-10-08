@@ -69,15 +69,15 @@ export function pingCommand(res) {
 
 // Get a random reaction image from the reactionImages github repo
 export async function getReactionImage() {
-	const repoTree = await fetch("https://api.github.com/repos/CappaBot1/reactionImages/git/trees/main").tree
-	let imageNames = []
+	let imageURLs = []
+	const response = (await fetch("https://api.github.com/repos/CappaBot1/reactionImages/contents", {method: "GET"}))
+	
+	let repoContents = await response.json()
 
-	for (let file in repoTree) {
-		imageNames.push(file.url)
+	for (let i = 0; i < repoContents.length; i ++) {
+		imageURLs.push("https://raw.githubusercontent.com/CappaBot1/reactionImages/refs/heads/main/" + repoContents[i].name)
 	}
 
-	console.log(`Found ${imageNames.length} reaction images in the github repo`)
-	let chosenImage = imageNames[Math.floor(Math.random()*imageNames.length)]
-	console.log("Chosen image:", chosenImage)
-	return chosenImage
+	console.log(`Found ${imageURLs.length} reaction images in the github repo`)
+	return imageURLs[Math.floor(Math.random()*imageURLs.length)]
 }
