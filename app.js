@@ -1,18 +1,25 @@
 import 'dotenv/config';
 import express from 'express';
 import { verifyKeyMiddleware } from 'discord-interactions';
-import { line, pingCommand } from './utils.js';
+import { pingCommand, getReactionImage } from './utils.js';
+
+// Suppress that random warning that keeps popping up
+process.env.NODE_NO_WARNINGS = 'stream/web';
 
 // Create an express app
 const app = express();
 // Get port, or default to 3000
 const PORT = process.env.PORT || 3000;
 
+app.get("/", function (req, res) {
+	return res.send("CappaBot is up 👍")
+})
+
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
  * Parse request body and verifies incoming requests using discord-interactions package
  */
-app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async function (req, res) {
+app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async function (req, res) {
 	// Interaction type and data
 	const { type, data } = req.body;
 
@@ -36,7 +43,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 		}
 
 		// "test" command
-		if (name == "test") {
+		else if (name == "test") {
 			return res.send({
 				type: 4,
 				data: {
@@ -65,6 +72,19 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 			});
 		}
 
+		// "react" command
+		else if (name == "react") {
+			console.log("Reacting to message")
+			console.log(data.resolved.messages)
+			return res.send({
+				type: 4,
+				data: {
+					// Reply with the reaction
+					content: await getReactionImage()
+				}
+			});
+		}
+
 		console.error(`unknown command: ${name}`);
 		return res.status(400).json({ error: 'unknown command' });
 	}
@@ -79,7 +99,6 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 
 		// Test message button
 		else if (custom_id == "test message") {
-			console.log("Testing message")
 			return res.send({
 				type: 4,
 				data: {
