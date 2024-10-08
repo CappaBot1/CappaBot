@@ -1,6 +1,28 @@
 {
+  "name": "cappa-bot",
+  "private": true,
+  "version": "1.0.0",
+  "description": "The CappaBot bot",
+  "main": "app.js",
   "type": "module",
+  "engines": {
+    "node": ">=18.x"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "register": "node commands.js",
+    "dev": "nodemon app.js",
+    "main": "node main.js"
+  },
+  "author": "Shay DeWael",
+  "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.4.5"
+    "cappa-bot": "file:",
+    "discord-interactions": "^4.0.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
   }
 }
