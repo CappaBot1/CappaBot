@@ -78,6 +78,5 @@ export async function getReactionImage() {
 		imageURLs.push("https://raw.githubusercontent.com/CappaBot1/reactionImages/refs/heads/main/" + repoContents[i].name)
 	}
 
-	console.log(`Found ${imageURLs.length} reaction images in the github repo`)
 	return imageURLs[Math.floor(Math.random()*imageURLs.length)]
 }

@@ -75,7 +75,6 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 		// "react" command
 		else if (name == "react") {
 			console.log("Reacting to message")
-			console.log(data.resolved.messages)
 			return res.send({
 				type: 4,
 				data: {
