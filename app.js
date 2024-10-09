@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import ngrok from '@ngrok/ngrok';
 import { verifyKeyMiddleware } from 'discord-interactions';
 import { pingCommand, getReactionImage } from './utils.js';
 
@@ -9,7 +10,7 @@ process.env.NODE_NO_WARNINGS = 'stream/web';
 // Create an express app
 const app = express();
 // Get port, or default to 3000
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.get("/", function (req, res) {
 	return res.send("CappaBot is up 👍")
@@ -164,6 +165,19 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 	return res.status(400).json({ error: 'unknown interaction type' });
 });
 
-app.listen(PORT, () => {
-	console.log('Listening on port', PORT);
+// Start the express app
+app.listen(port, () => {
+	console.log('Listening on port', port);
 });
+
+// Start ngrok
+(async function() {
+    console.log("Initializing Ngrok tunnel...");
+
+    const listener = await ngrok.forward({
+		addr: port,
+		domain: process.env.NGROK_DOMAIN || "",
+		authtoken: process.env.NGROK_TOKEN || ""
+	});
+  	console.log(`Ingress established at: ${listener.url()}`);
+})();
