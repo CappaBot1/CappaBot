@@ -12,8 +12,16 @@ const app = express();
 // Get port, or default to 3000
 const port = process.env.PORT || 3000;
 
+// Check if CappaBot is working
 app.get("/", function (req, res) {
-	return res.send("CappaBot is up 👍")
+	return res.send("CappaBot is up 👍");
+})
+
+// Use github webhooks for push requests so CappaBot can auto-update
+app.post("/github", function (req, res) {
+	console.log("Got post request from github!");
+	console.log(req)
+	return res.send("Yeah man.");
 })
 
 /**
@@ -24,7 +32,7 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 	// Interaction type and data
 	const { type, data } = req.body;
 
-	console.log(`Got interaction of type: ${type}`)
+	console.log(`Got interaction of type: ${type}`);
 
 	// Handle ping requests
 	if (type == 1) {
@@ -166,7 +174,7 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 });
 
 // Start the express app
-app.listen(port, () => {
+var server = app.listen(port, () => {
 	console.log('Listening on port', port);
 });
 
