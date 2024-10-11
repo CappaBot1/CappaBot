@@ -27,7 +27,9 @@ app.post("/github", function (req, res) {
 			.update(JSON.stringify(request.body))
 			.digest("hex");
 
-	console.log(req.headers.x-hub-signature);
+	const realHash = req.headers.x-hub-signature
+
+	console.log(realHash);
 	console.log(expectedHash)
 
 	if (sig.length !== digest.length || !crypto.timingSafeEqual(expectedHash, realHash)) {
