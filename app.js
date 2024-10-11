@@ -29,14 +29,12 @@ app.post("/github", function (req, res) {
 	} else {
 		console.log("Request verified");
 		exec("../update.sh",
-			(error, stdout, stderr) => {
-				console.log("Output:", stdout);
-				console.log("Error:", stderr);
-				if (error !== null) {
-					console.log("exec error:", error);
-				}
+			() => {
+				console.log("After update.");
 			});
-		setTimeout(() => {process.exit(0)}, 5000);
+		console.log("Closing server.")
+		server.close();
+		console.log("Server closed.")
 		return res.send("Yeah man.");
 	}
 });
