@@ -40,6 +40,7 @@ app.get("/pico.min.css", function (req, res) {
 // Use github webhooks for push requests so CappaBot can auto-update
 app.post("/github", function (req, res) {
 	console.log("Got request from github (maybe).");
+	console.log(req)
 
 	if (verifyGithub(req)) {
 		console.log("Request verified.");
@@ -59,15 +60,15 @@ function verifyGithub(req) {
 	if (!req.headers['user-agent'].includes('GitHub-Hookshot')) {
 		return false;
 	}
-	
+
 	// Compare their hmac signature to our hmac signature
 	// (hmac = hash-based message authentication code)
 	//const theirSignature = req.headers['x-hub-signature'];
-	const payload = JSON.stringify(req.body);
+	//const payload = JSON.stringify(req.body);
 	//const secret = String(process.env.GITHUB_WEBHOOK_SECRET);
 	//const ourSignature = `sha1=${crypto.createHmac('sha1', secret).update(payload).digest('hex')}`;
 	//return crypto.timingSafeEqual(Buffer.from(theirSignature), Buffer.from(ourSignature));
-	console.log(payload)
+	//console.log(payload)
 	return true
 }
 
