@@ -59,6 +59,7 @@ function verifyGithub(req) {
 	if (!req.headers['user-agent'].includes('GitHub-Hookshot')) {
 		return false;
 	}
+	console.log(req.body);
 	// Compare their hmac signature to our hmac signature
 	// (hmac = hash-based message authentication code)
 	/*const theirSignature = req.headers['x-hub-signature'];
