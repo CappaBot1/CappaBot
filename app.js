@@ -40,7 +40,7 @@ app.get("/pico.min.css", function (req, res) {
 // Use github webhooks for push requests so CappaBot can auto-update
 app.post("/github", function (req, res) {
 	console.log("Got request from github (maybe).");
-	console.log(req)
+	console.log(req);
 
 	if (verifyGithub(req)) {
 		console.log("Request verified.");
