@@ -46,7 +46,6 @@ app.post("/github", function (req, res) {
 		exec("git pull",
 			() => {
 				server.close();
-				setTimeout(() => {console.log("Test"), 5000})
 				return res.send("Yeah man.");
 			});
 	} else {
