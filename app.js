@@ -32,6 +32,11 @@ app.get("/website", function (req, res) {
 	res.sendFile(__dirname + "/index.html");
 });
 
+// Pico min stylesheet
+app.get("/pico.min.css", function (req, res) {
+	res.sendFile(__dirname + "/pico.min.css");
+})
+
 // Use github webhooks for push requests so CappaBot can auto-update
 app.post("/github", function (req, res) {
 	console.log("Got request from github (maybe).");
