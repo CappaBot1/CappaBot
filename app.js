@@ -29,7 +29,7 @@ app.get("/", function (req, res) {
 
 // The website portion of CappaBot
 app.get("/website", function (req, res) {
-	res.sendFile(__dirname + "index.html");
+	res.sendFile(__dirname + "/index.html");
 });
 
 // Use github webhooks for push requests so CappaBot can auto-update
