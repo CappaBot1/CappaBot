@@ -7,6 +7,7 @@ import crypto from 'crypto'
 
 // Starting message
 console.log("Starting CappaBot...");
+console.log(__dirname)
 
 // Suppress that random warning that keeps popping up
 process.env.NODE_NO_WARNINGS = 'stream/web';
