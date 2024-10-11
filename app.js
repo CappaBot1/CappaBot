@@ -36,7 +36,7 @@ app.get("/website", function (req, res) {
 app.post("/github", function (req, res) {
 	console.log("Got request from github (maybe).");
 
-	if (verifyGithub()) {
+	if (verifyGithub(req)) {
 		console.log("Request verified.");
 		exec("git pull",
 			() => {
@@ -50,7 +50,7 @@ app.post("/github", function (req, res) {
 });
 
 // Function used to verify if /github is being POSTed by the real github
-function verifyGithub() {
+function verifyGithub(req) {
 	if (!req.headers['user-agent'].includes('GitHub-Hookshot')) {
 		return false;
 	}
