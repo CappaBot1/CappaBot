@@ -21,21 +21,18 @@ app.get("/", function (req, res) {
 
 // Use github webhooks for push requests so CappaBot can auto-update
 app.post("/github", function (req, res) {
-	console.log("Got request from github!");
+	console.log("Got request from github (maybe).");
 
 	if (false) {
-		console.log("Request not verified");
+		console.log("Request not verified.");
 		return res.status(401).send("Yeah nah.");
 	} else {
-		console.log("Request verified");
+		console.log("Request verified.");
 		exec("../update.sh",
 			() => {
-				console.log("After update.");
+				server.close();
+				return res.send("Yeah man.");
 			});
-		console.log("Closing server.")
-		server.close();
-		console.log("Server closed.")
-		return res.send("Yeah man.");
 	}
 });
 
