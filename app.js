@@ -47,7 +47,7 @@ app.post("/github", function (req, res) {
 		setTimeout(() => {process.exit(0)}, 5000);
 		return res.send("Yeah man.");
 	}
-})
+});
 
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
