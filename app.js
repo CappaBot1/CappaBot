@@ -29,7 +29,7 @@ app.post("/github", function (req, res) {
 	const realHash = req.headers.x-hub-signature
 
 	console.log(realHash);
-	console.log(expectedHash)
+	console.log(expectedHash);
 
 	if (sig.length !== digest.length || !crypto.timingSafeEqual(expectedHash, realHash)) {
 		console.log("Request not verified")
