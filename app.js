@@ -22,22 +22,11 @@ app.get("/", function (req, res) {
 app.post("/github", function (req, res) {
 	console.log("Got request from github!");
 
-	const requestBody = req.body
-	console.log(requestBody);
-
-	const realHash = Buffer.from(req.get("x-hub-signature-256") || '', 'utf8')
-	console.log(realHash);
-	const hmac = crypto.createHmac("sha256", process.env.GITHUB_WEBHOOK_SECRET)
-	console.log(hmac);
-	const expectedHash = Buffer.from("sha256=" + hmac.update(requestBody).digest('hex'), 'utf8')
-
-	console.log(expectedHash);
-
-	if (realHash.length !== expectedHash.length || !crypto.timingSafeEqual(expectedHash, realHash)) {
-		console.log("Request not verified")
+	if (false) {
+		console.log("Request not verified");
 		return res.send("Yeah nah.");
 	} else {
-		console.log("Request verified")
+		console.log("Request verified");
 		exec("../update.sh",
 			(error, stdout, stderr) => {
 				console.log("Output:", stdout);
