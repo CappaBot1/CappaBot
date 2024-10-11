@@ -15,6 +15,7 @@ const port = process.env.PORT || 3000;
 
 // Check if CappaBot is working
 app.get("/", function (req, res) {
+	console.log("Got get request to main site.")
 	return res.send("CappaBot is up 👍");
 });
 
