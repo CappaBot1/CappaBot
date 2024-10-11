@@ -20,7 +20,20 @@ app.get("/", function (req, res) {
 app.post("/github", function (req, res) {
 	console.log("Got post request from github!");
 	console.log(req.headers);
-	return res.send("Yeah man.");
+	if (true) {
+		exec("../update.sh",
+			(error, stdout, stderr) => {
+				console.log("Output:", stdout);
+				console.log("Error:", stderr);
+				if (error !== null) {
+					console.log("exec error:", error);
+				}
+			});
+		setTimeout(() => {process.exit(0)}, 5000);
+		return res.send("Yeah man.");
+	} else {
+		return res.send("Yeah nah.");
+	}
 })
 
 /**
