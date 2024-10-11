@@ -22,22 +22,32 @@ app.get("/", function (req, res) {
 	return res.send("CappaBot is up 👍");
 });
 
+// The website portion of CappaBot
+app.get("/website", function (req, res) {
+	res.sendFile(__dirname + "index.html");
+});
+
 // Use github webhooks for push requests so CappaBot can auto-update
 app.post("/github", function (req, res) {
 	console.log("Got request from github (maybe).");
 
-	if (false) {
-		console.log("Request not verified.");
-		return res.status(401).send("Yeah nah.");
-	} else {
+	if (verifyGithub()) {
 		console.log("Request verified.");
 		exec("../update.sh",
 			() => {
 				server.close();
 				return res.send("Yeah man.");
 			});
+	} else {
+		console.log("Request not verified.");
+		return res.status(401).send("Yeah nah.");
 	}
 });
+
+// Function used to verify if /github is being POSTed by the real github
+function verifyGithub() {
+	return true
+}
 
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
