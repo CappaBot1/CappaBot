@@ -58,7 +58,7 @@ function verifyGithub(req) {
 	// (hmac = hash-based message authentication code)
 	const theirSignature = req.headers['x-hub-signature'];
 	const payload = JSON.stringify(req.body);
-	const secret = parseInt(process.env.GITHUB_WEBHOOK_SECRET);
+	const secret = String(process.env.GITHUB_WEBHOOK_SECRET);
 	const ourSignature = `sha1=${crypto.createHmac('sha1', secret).update(payload).digest('hex')}`;
 	return crypto.timingSafeEqual(Buffer.from(theirSignature), Buffer.from(ourSignature));
 }
