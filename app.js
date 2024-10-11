@@ -51,7 +51,16 @@ app.post("/github", function (req, res) {
 
 // Function used to verify if /github is being POSTed by the real github
 function verifyGithub() {
-	return true
+	if (!req.headers['user-agent'].includes('GitHub-Hookshot')) {
+		return false;
+	}
+	// Compare their hmac signature to our hmac signature
+	// (hmac = hash-based message authentication code)
+	const theirSignature = req.headers['x-hub-signature'];
+	const payload = JSON.stringify(req.body);
+	const secret = 'YOUR_WEBHOOK_SECRET_HERE'; // TODO: Replace me
+	const ourSignature = `sha1=${crypto.createHmac('sha1', secret).update(payload).digest('hex')}`;
+	return crypto.timingSafeEqual(Buffer.from(theirSignature), Buffer.from(ourSignature));
 }
 
 /**
