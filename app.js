@@ -25,7 +25,7 @@ app.post("/github", function (req, res) {
 
 	if (false) {
 		console.log("Request not verified");
-		return res.send("Yeah nah.");
+		return res.status(401).send("Yeah nah.");
 	} else {
 		console.log("Request verified");
 		exec("../update.sh",
