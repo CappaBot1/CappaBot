@@ -23,7 +23,7 @@ app.post("/github", function (req, res) {
 	console.log("Got request from github!");
 
 	const requestBody = req.body
-	console.log(requestBody)
+	console.log(requestBody);
 
 	const realHash = Buffer.from(req.get("x-hub-signature-256") || '', 'utf8')
 	console.log(realHash);
