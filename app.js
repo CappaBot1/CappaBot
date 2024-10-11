@@ -22,10 +22,9 @@ app.get("/", function (req, res) {
 app.post("/github", function (req, res) {
 	console.log("Got request from github!");
 
-	const expectedHash = "sha256=" +
-		crypto.createHmac("sha256", process.env.GITHUB_WEBHOOK_SECRET)
-			.update(JSON.stringify(req.body))
-			.digest("hex");
+	const sig = Buffer.from(req.get(sigHeaderName) || '', 'utf8')
+	const hmac = crypto.createHmac(sigHashAlg, secret)
+	const digest = Buffer.from("sha256=" + hmac.update(req.rawBody).digest('hex'), 'utf8')
 
 	const realHash = req.headers.x-hub-signature
 
