@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import 'readline'
 
 export async function DiscordRequest(method, endpoint, payload, logResponse) {
 	// Add the endpoint to the api url

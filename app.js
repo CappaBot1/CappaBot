@@ -19,7 +19,7 @@ app.get("/", function (req, res) {
 // Use github webhooks for push requests so CappaBot can auto-update
 app.post("/github", function (req, res) {
 	console.log("Got post request from github!");
-	console.log(req)
+	console.log(req.headers);
 	return res.send("Yeah man.");
 })
 
