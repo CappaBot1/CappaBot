@@ -3,7 +3,7 @@ import express from 'express';
 import { verifyKeyMiddleware } from 'discord-interactions';
 import { pingCommand, getReactionImage } from './utils.js';
 import { exec } from 'child_process'
-import crypto from crypto
+import crypto from 'crypto'
 
 // Suppress that random warning that keeps popping up
 process.env.NODE_NO_WARNINGS = 'stream/web';
