@@ -16,7 +16,7 @@ const port = process.env.PORT || 3000;
 // Check if CappaBot is working
 app.get("/", function (req, res) {
 	return res.send("CappaBot is up 👍");
-})
+});
 
 // Use github webhooks for push requests so CappaBot can auto-update
 app.post("/github", function (req, res) {
