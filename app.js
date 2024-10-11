@@ -27,7 +27,7 @@ app.post("/github", function (req, res) {
 	const digest = Buffer.from("sha256=" + hmac.update(req.rawBody).digest('hex'), 'utf8')
 
 	console.log(realHash);
-	console.log(expectedHash)
+	console.log(expectedHash);
 
 	if (sig.length !== digest.length || !crypto.timingSafeEqual(expectedHash, realHash)) {
 		console.log("Request not verified")
