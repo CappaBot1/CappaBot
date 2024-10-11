@@ -5,6 +5,9 @@ import { pingCommand, getReactionImage } from './utils.js';
 import { exec } from 'child_process'
 import crypto from 'crypto'
 
+// Starting message
+console.log("Starting CappaBot...");
+
 // Suppress that random warning that keeps popping up
 process.env.NODE_NO_WARNINGS = 'stream/web';
 
@@ -15,7 +18,7 @@ const port = process.env.PORT || 3000;
 
 // Check if CappaBot is working
 app.get("/", function (req, res) {
-	console.log("Got get request to main site.")
+	console.log("Got get request to main site.");
 	return res.send("CappaBot is up 👍");
 });
 
