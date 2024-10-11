@@ -3,6 +3,7 @@ import express from 'express';
 import { verifyKeyMiddleware } from 'discord-interactions';
 import { pingCommand, getReactionImage } from './utils.js';
 import { exec } from 'child_process'
+import crypto from crypto
 
 // Suppress that random warning that keeps popping up
 process.env.NODE_NO_WARNINGS = 'stream/web';
@@ -19,9 +20,21 @@ app.get("/", function (req, res) {
 
 // Use github webhooks for push requests so CappaBot can auto-update
 app.post("/github", function (req, res) {
-	console.log("Got post request from github!");
-	console.log(req.headers);
-	if (true) {
+	console.log("Got request from github!");
+
+	const expectedHash = "sha256=" +
+		crypto.createHmac("sha256", process.env.GITHUB_WEBHOOK_SECRET)
+			.update(JSON.stringify(request.body))
+			.digest("hex");
+
+	console.log(req.headers.x-hub-signature);
+	console.log(expectedHash)
+
+	if (sig.length !== digest.length || !crypto.timingSafeEqual(expectedHash, realHash)) {
+		console.log("Request not verified")
+		return res.send("Yeah nah.");
+	} else {
+		console.log("Request verified")
 		exec("../update.sh",
 			(error, stdout, stderr) => {
 				console.log("Output:", stdout);
@@ -32,8 +45,6 @@ app.post("/github", function (req, res) {
 			});
 		setTimeout(() => {process.exit(0)}, 5000);
 		return res.send("Yeah man.");
-	} else {
-		return res.send("Yeah nah.");
 	}
 })
 
