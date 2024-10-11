@@ -67,7 +67,7 @@ function verifyGithub(req) {
 	const secret = String(process.env.GITHUB_WEBHOOK_SECRET);
 	const ourSignature = `sha1=${crypto.createHmac('sha1', secret).update(payload).digest('hex')}`;
 	return crypto.timingSafeEqual(Buffer.from(theirSignature), Buffer.from(ourSignature));
-	//console.log(payload)
+	//console.log(payload);
 	//return true
 }
 
