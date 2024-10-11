@@ -3,11 +3,15 @@ import express from 'express';
 import { verifyKeyMiddleware } from 'discord-interactions';
 import { pingCommand, getReactionImage } from './utils.js';
 import { exec } from 'child_process'
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import crypto from 'crypto'
 
 // Starting message
 console.log("Starting CappaBot...");
-console.log(__dirname)
+
+// Make a fake __dirname
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Suppress that random warning that keeps popping up
 process.env.NODE_NO_WARNINGS = 'stream/web';
