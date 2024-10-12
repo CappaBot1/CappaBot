@@ -13,6 +13,35 @@ import { pingCommand, getReactionImage, bitField } from './utils.js';
 console.log("----------------------------------------------------------------")
 console.log("Starting CappaBot...");
 
+const suggestionModal = {
+	type: 9,
+	data: {
+		title: "Add suggestion",
+		custom_id: "add suggestion",
+		components: [{
+			type: 1,
+			components: [
+				{
+					type: 4,
+					custom_id: "suggestion_title",
+					label: "Your suggestion",
+					style: 1,
+					placeholder: "Super cool suggestion name",
+					required: true
+				},
+				{
+					type: 4,
+					custom_id: "suggestion_body",
+					label: "Description",
+					style: 2,
+					placeholder: "Add X because Y...",
+					required: false
+				}
+			]
+		}]
+	}
+}
+
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -223,48 +252,7 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 		// Add suggestion button
 		else if (custom_id == "add suggestion modal") {
 			console.log("Suggestion modal")
-			return res.send({
-				type: 9,
-				data: {
-					// Reply with a test modal
-					title: "Yup, the test modal worked",
-					custom_id: "test modal submit",
-					components: [{
-						type: 1,
-						components: [{
-							type: 4,
-							custom_id: "test text input",
-							label: "Test text",
-							style: 1,
-							placeholder: "Yeah, it worked",
-							required: true
-						}]
-					}]
-					/*title: "Add suggestion",
-					custom_id: "add suggestion",
-					components: [{
-						type: 1,
-						components: [
-							{
-								type: 4,
-								custom_id: "suggestion_title",
-								label: "Your suggestion",
-								style: 1,
-								placeholder: "Super cool suggestion name",
-								required: true
-							},
-							{
-								type: 4,
-								custom_id: "suggestion_body",
-								label: "Description",
-								style: 2,
-								placeholder: "Add X because Y...",
-								required: false
-							}
-						]
-					}]*/
-				}
-			});
+			return res.send(suggestionModal);
 		}
 
 		// View suggestions button
