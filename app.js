@@ -146,8 +146,8 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 			});
 		}
 
-		// "suggestion" command
-		else if (name == "suggestion") {
+		// "suggestions" command
+		else if (name == "suggestions") {
 			return res.send({
 				type: 9,
 				data: {
