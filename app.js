@@ -20,16 +20,26 @@ const suggestionModal = {
 		custom_id: "add_suggestion",
 		components: [
 			{
-				type: 4,
-				custom_id: "suggestion_title",
-				label: "Your suggestion",
-				placeholder: "Super cool suggestion name"
+				type: 1,
+				components: [{
+					type: 4,
+					custom_id: "suggestion_title",
+					label: "Your suggestion",
+					style: 1,
+					placeholder: "Super cool suggestion name",
+					required: true
+				}]
 			},
 			{
-				type: 4,
-				custom_id: "suggestion_body",
-				label: "Description",
-				placeholder: "Add X because Y..."
+				type: 1,
+				components: [{
+					type: 4,
+					custom_id: "suggestion_body",
+					label: "Description",
+					style: 2,
+					placeholder: "Add X because Y...",
+					required: false
+				}]
 			}
 		]
 	}
@@ -283,7 +293,7 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 
 		// The add suggestion modal
 		if (custom_id == "add_suggestion") {
-			let suggestion = `${component[0]} - ${component[1]}`
+			let suggestion = `${component[0]}: ${component[1]}`
 			fs.appendFileSync("suggestions.txt", suggestion);
 			// Send an ephemeral thank you message
 			return res.send({
