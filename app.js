@@ -26,8 +26,8 @@ const suggestionModal = {
 					custom_id: "suggestion_title",
 					label: "Your suggestion",
 					style: 1,
-					placeholder: "Super cool suggestion name"/*,
-					required: true*/
+					placeholder: "Super cool suggestion name",
+					required: true
 				}/*,
 				{
 					type: 4,
