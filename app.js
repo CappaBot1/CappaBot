@@ -312,11 +312,11 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 			let suggestion = `${inputs[0]}: ${inputs[1]}\n`
 
 			// Append the suggestion to the file
-			fs.appendFile("suggestions.txt", suggestion, (err) => {
+			fs.appendFile("suggestions.txt", suggestion, "utf-8", (err) => {
 				if (err) {
 					throw err;
 				}
-				fs.readFile("suggestions.txt", (err, data) => {
+				fs.readFile("suggestions.txt", "utf-8", (err, data) => {
 					if (err) {
 						throw err;
 					}
