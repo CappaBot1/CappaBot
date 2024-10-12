@@ -222,10 +222,25 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 
 		// Add suggestion button
 		else if (custom_id == "add suggestion modal") {
+			console.log("Suggestion modal")
 			return res.send({
 				type: 9,
 				data: {
-					title: "Add suggestion",
+					// Reply with a test modal
+					title: "Yup, the test modal worked",
+					custom_id: "test modal submit",
+					components: [{
+						type: 1,
+						components: [{
+							type: 4,
+							custom_id: "test text input",
+							label: "Test text",
+							style: 1,
+							placeholder: "Yeah, it worked",
+							required: true
+						}]
+					}]
+					/*title: "Add suggestion",
 					custom_id: "add suggestion",
 					components: [{
 						type: 1,
@@ -247,9 +262,9 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 								required: false
 							}
 						]
-					}]
+					}]*/
 				}
-			})
+			});
 		}
 
 		// View suggestions button
@@ -259,7 +274,7 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 				data: {
 					content: fs.readFileSync("suggestions.txt")
 				}
-			})
+			});
 		}
 
 		console.error(`unknown customID: ${custom_id}`);
