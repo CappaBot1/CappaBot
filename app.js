@@ -17,25 +17,28 @@ const suggestionModal = {
 	type: 9,
 	data: {
 		title: "Add suggestion",
-		custom_id: "add suggestion",
-		components: [
-			{
-				type: 4,
-				custom_id: "suggestion_title",
-				label: "Your suggestion",
-				style: 1,
-				placeholder: "Super cool suggestion name",
-				required: true
-			},
-			{
-				type: 4,
-				custom_id: "suggestion_body",
-				label: "Description",
-				style: 2,
-				placeholder: "Add X because Y...",
-				required: false
-			}
-		]
+		custom_id: "add_suggestion",
+		components: [{
+			type: 1,
+			components: [
+				{
+					type: 4,
+					custom_id: "suggestion_title",
+					label: "Your suggestion",
+					style: 1,
+					placeholder: "Super cool suggestion name"/*,
+					required: true*/
+				}/*,
+				{
+					type: 4,
+					custom_id: "suggestion_body",
+					label: "Description",
+					style: 2,
+					placeholder: "Add X because Y...",
+					required: false
+				}*/
+			]
+		}]
 	}
 }
 
@@ -285,10 +288,10 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 			});
 		}
 
-		// The testing modal
-		if (custom_id == "add suggestion") {
+		// The add suggestion modal
+		if (custom_id == "add_suggestion") {
 			let suggestion = `${component[0]}: ${component[1]} - ${username}`
-			fs.appendFile("suggestions.txt", suggestion)
+			fs.appendFileSync("suggestions.txt", suggestion);
 			// Send an ephemeral thank you message
 			return res.send({
 				type: 4,
