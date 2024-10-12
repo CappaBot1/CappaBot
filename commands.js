@@ -3,19 +3,18 @@ import { InstallGlobalCommands } from './utils.js';
 
 
 const ALL_COMMANDS = [
-	// Ping command
 	{
 		name: "ping",
 		description: "Ping the server"
 	},
-
-	// Test command
 	{
 		name: "test",
 		description: "Give some buttons for testing the bot"
 	},
-
-	// React command
+	{
+		name: "suggestions",
+		description: "View and submit suggestions using this command!"
+	},
 	{
 		type: 3,
 		name: "react",
@@ -23,4 +22,4 @@ const ALL_COMMANDS = [
 	}
 ];
 
-InstallGlobalCommands(process.env.APP_ID, ALL_COMMANDS);
+InstallGlobalCommands(ALL_COMMANDS);
