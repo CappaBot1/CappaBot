@@ -16,12 +16,10 @@
   "author": "Casper Howse",
   "license": "MIT",
   "dependencies": {
-    "@ngrok/ngrok": "^1.4.1",
     "cappa-bot": "file:",
     "discord-interactions": "^4.0.0",
     "dotenv": "^16.0.3",
-    "express": "^4.21.0",
-    "ngrok": "^5.0.0-beta.2"
+    "express": "^4.21.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.0"

@@ -307,20 +307,3 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 var server = app.listen(port, () => {
 	console.log("Listening on port", port);
 });
-
-// Start ngrok if not using raspberry pi
-if (process.env.USING_RPI == "false" || process.env.USING_RPI == undefined) {
-	import('@ngrok/ngrok')
-	.then((ngrok) => {
-		(async function() {
-		    console.log("Initializing Ngrok tunnel...");
-		
-		    const listener = await ngrok.forward({
-				addr: port,
-				domain: process.env.NGROK_DOMAIN || "",
-				authtoken: process.env.NGROK_TOKEN || ""
-			});
-		  	console.log(`Ingress established at: ${listener.url()}`);
-		})();
-	})
-}
