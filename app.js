@@ -33,7 +33,7 @@ const suggestionModal = {
 					type: 4,
 					custom_id: "suggestion_body",
 					label: "Description",
-					style: 2,
+					style: 1,
 					placeholder: "Add X because Y...",
 					required: false
 				}
