@@ -39,7 +39,7 @@ const suggestionModal = {
 			]
 		}]
 	}
-}
+};
 
 // Suppress that random warning that keeps popping up
 process.env.NODE_NO_WARNINGS = 'stream/web';
@@ -109,7 +109,8 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 	const body = req.body;
 	const { type, data } = body;
 
-	const username = body.member.user.username
+	//const username = body.member.user.username
+	console.log(body);
 
 	console.log(`Got interaction of type: ${type}`);
 
