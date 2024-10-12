@@ -18,23 +18,26 @@ const suggestionModal = {
 	data: {
 		title: "Add suggestion",
 		custom_id: "add_suggestion",
-		components: [{
-			type: 1,
-			components: [
-				{
+		components: [
+			{
+				type: 1,
+				components: [{
 					type: 4,
 					custom_id: "suggestion_title",
 					label: "Your suggestion",
 					placeholder: "Super cool suggestion name"
-				},
-				{
+				}]
+			},
+			{
+				type: 1,
+				components: [{
 					type: 4,
 					custom_id: "suggestion_body",
 					label: "Description",
 					placeholder: "Add X because Y..."
-				}
-			]
-		}]
+				}]
+			}
+		]
 	}
 }
 
