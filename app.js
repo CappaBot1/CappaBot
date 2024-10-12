@@ -13,38 +13,6 @@ import { pingCommand, getReactionImage, bitField } from './utils.js';
 console.log("----------------------------------------------------------------")
 console.log("Starting CappaBot...");
 
-const suggestionModal = {
-	type: 9,
-	data: {
-		title: "Add suggestion",
-		custom_id: "add_suggestion",
-		components: [
-			{
-				type: 1,
-				components: [{
-					type: 4,
-					custom_id: "suggestion_title",
-					label: "Your suggestion",
-					style: 1,
-					placeholder: "Super cool suggestion name",
-					required: true
-				}]
-			},
-			{
-				type: 1,
-				components: [{
-					type: 4,
-					custom_id: "suggestion_body",
-					label: "Description",
-					style: 2,
-					placeholder: "Add X because Y...",
-					required: false
-				}]
-			}
-		]
-	}
-}
-
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -113,8 +81,7 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 	const body = req.body;
 	const { type, data } = body;
 
-	//const username = body.member.user.username
-	console.log(body);
+	//console.log(body);
 
 	console.log(`Got interaction of type: ${type}`);
 
@@ -255,15 +222,47 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 		// Add suggestion button
 		else if (custom_id == "add suggestion modal") {
 			console.log("Suggestion modal")
-			return res.send(suggestionModal);
+			return res.send({
+				type: 9,
+				data: {
+					title: "Add suggestion",
+					custom_id: "add suggestion",
+					components: [
+						{
+							type: 1,
+							components: [{
+								type: 4,
+								custom_id: "suggestion_title",
+								label: "Your suggestion",
+								style: 1,
+								placeholder: "Super cool suggestion name",
+								required: true
+							}]
+						},
+						{
+							type: 1,
+							components: [{
+								type: 4,
+								custom_id: "suggestion_body",
+								label: "Description",
+								style: 2,
+								placeholder: "Add X because Y...",
+								required: false
+							}]
+						}
+					]
+				}
+			});
 		}
 
 		// View suggestions button
 		else if (custom_id == "view suggestions") {
+			let suggestions = fs.readFileSync("suggestions.txt")
+			console.log("Suggestions:", suggestions)
 			return res.send({
 				type: 7,
 				data: {
-					content: fs.readFileSync("suggestions.txt")
+					content: suggestions
 				}
 			});
 		}
@@ -292,7 +291,7 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 		}
 
 		// The add suggestion modal
-		if (custom_id == "add_suggestion") {
+		if (custom_id == "add suggestion") {
 			let suggestion = `${component[0]}: ${component[1]}`
 			fs.appendFileSync("suggestions.txt", suggestion);
 			// Send an ephemeral thank you message
