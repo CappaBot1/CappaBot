@@ -302,7 +302,7 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 
 		// The add suggestion modal
 		if (custom_id == "add suggestion") {
-			let suggestion = `${inputs[0]}: ${inputs[1]}`
+			let suggestion = `${inputs[0]}: ${inputs[1]}\n`
 			fs.appendFileSync("suggestions.txt", suggestion);
 			// Send an ephemeral thank you message
 			return res.send({
