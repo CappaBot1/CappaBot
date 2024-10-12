@@ -27,7 +27,7 @@
   "nodemonConfig": {
     "watch": "*.*",
     "ignore": [
-      "*.txt"
+      "suggestions.txt"
     ]
   }
 }
