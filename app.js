@@ -16,34 +16,6 @@ console.log("Starting CappaBot...");
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const suggestionModal = {
-	type: 4,
-	data: {
-		// Reply with a message asking what to test
-		content: "What would you like to test?",
-		components: [{
-			type: 1,
-			components: [
-				{
-					type: 2,
-					style: 3,
-					label: "Message",
-					custom_id: "test message"
-				},
-				{
-					type: 2,
-					style: 3,
-					label: "Modal",
-					custom_id: "test modal"
-				}
-			]
-		}]
-	}
-};
-
-// Suppress that random warning that keeps popping up
-process.env.NODE_NO_WARNINGS = 'stream/web';
-
 // Get port, or default to 3000
 const port = process.env.PORT || 3000;
 
@@ -173,8 +145,31 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 
 		// "suggestions" command
 		else if (name == "suggestions") {
-			console.log("Getting suggestion");
-			return res.send(suggestionModal);
+			console.log("Getting suggestion command");
+			return res.send({
+				type: 4,
+				data: {
+					// Reply with a message with action buttons
+					content: "What do you want to do?",
+					components: [{
+						type: 1,
+						components: [
+							{
+								type: 2,
+								style: 3,
+								label: "Add suggestion",
+								custom_id: "add suggestion modal"
+							},
+							{
+								type: 2,
+								style: 3,
+								label: "View suggestions",
+								custom_id: "view suggestions"
+							}
+						]
+					}]
+				}
+			});
 		}
 
 		console.error(`unknown command: ${name}`);
@@ -257,6 +252,16 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 			})
 		}
 
+		// View suggestions button
+		else if (custom_id == "view suggestions") {
+			return res.send({
+				type: 7,
+				data: {
+					content: fs.readFileSync("suggestions.txt")
+				}
+			})
+		}
+
 		console.error(`unknown customID: ${custom_id}`);
 		return res.status(400).json({ error: 'unknown customID' });
 	}
@@ -283,7 +288,7 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 		// The testing modal
 		if (custom_id == "add suggestion") {
 			let suggestion = `${component[0]}: ${component[1]} - ${username}`
-			fs.appendFileSync("suggestions.txt", suggestion)
+			fs.appendFile("suggestions.txt", suggestion)
 			// Send an ephemeral thank you message
 			return res.send({
 				type: 4,
