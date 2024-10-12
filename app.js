@@ -313,6 +313,6 @@ try {
 	var server = app.listen(port, () => {
 		console.log("Listening on port", port);
 	});
-} catch {
-	fs.appendFileSync("crashEpochs.txt", "Error at Epoch (ms): " + Date.now())
+} catch (err) {
+	fs.appendFileSync("crashEpochs.txt", "Error at Epoch (ms): " + Date.now() + " - " + err)
 }
