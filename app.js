@@ -276,7 +276,17 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 		console.log(data)
 		const { custom_id, components } = data
 
-		let component = components[0].components
+		let inputs = []
+		let value = ""
+		for (let i = 0; i < 5; i ++) {
+			try {
+				value = components[0][i].value
+			} catch {
+				value = ""
+			} finally {
+				inputs.push(value)
+			}
+		}
 
 		// The testing modal
 		if (custom_id == "test modal submit") {
@@ -285,14 +295,14 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 				type: 4,
 				data: {
 					// Reply with a message asking what to test
-					content: "Test text inputted in modal: " + component[0].value
+					content: "Test text inputted in modal: " + inputs[0]
 				}
 			});
 		}
 
 		// The add suggestion modal
 		if (custom_id == "add suggestion") {
-			let suggestion = `${component[0]}: ${component[1]}`
+			let suggestion = `${inputs[0]}: ${inputs[1]}`
 			fs.appendFileSync("suggestions.txt", suggestion);
 			// Send an ephemeral thank you message
 			return res.send({
