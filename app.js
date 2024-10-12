@@ -13,6 +13,14 @@ import { pingCommand, getReactionImage, bitField } from './utils.js';
 console.log("----------------------------------------------------------------")
 console.log("Starting CappaBot...");
 
+var suggestions;
+fs.readFile("suggestions.txt", (err, data) => {
+    if (err) {
+        throw err;
+    }
+    suggestions = data;
+});
+
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -257,7 +265,6 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 
 		// View suggestions button
 		else if (custom_id == "view suggestions") {
-			let suggestions = fs.readFileSync("suggestions.txt")
 			console.log("Suggestions:", suggestions)
 			return res.send({
 				type: 7,
@@ -303,7 +310,20 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 		// The add suggestion modal
 		if (custom_id == "add suggestion") {
 			let suggestion = `${inputs[0]}: ${inputs[1]}\n`
-			fs.appendFileSync("suggestions.txt", suggestion);
+
+			// Append the suggestion to the file
+			fs.appendFile("suggestions.txt", suggestion, (err) => {
+				if (err) {
+					throw err;
+				}
+				fs.readFile("suggestions.txt", (err, data) => {
+					if (err) {
+						throw err;
+					}
+					suggestions = data;
+				});
+			});
+			
 			// Send an ephemeral thank you message
 			return res.send({
 				type: 4,
