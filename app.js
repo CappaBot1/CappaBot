@@ -1,13 +1,16 @@
 import 'dotenv/config';
 import express from 'express';
 import { verifyKeyMiddleware } from 'discord-interactions';
-import { pingCommand, getReactionImage } from './utils.js';
 import { exec } from 'child_process'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import crypto from 'crypto'
+import crypto from 'crypto';
+import * as fs from 'node:fs';
+
+import { pingCommand, getReactionImage, bitField } from './utils.js';
 
 // Starting message
+console.log("----------------------------------------------------------------")
 console.log("Starting CappaBot...");
 
 // Make a fake __dirname
@@ -77,7 +80,10 @@ function verifyGithub(req) {
  */
 app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async function (req, res) {
 	// Interaction type and data
-	const { type, data } = req.body;
+	const body = req.body;
+	const { type, data } = body;
+
+	const username = body.member.user.username
 
 	console.log(`Got interaction of type: ${type}`);
 
@@ -91,6 +97,7 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 	 * See https://discord.com/developers/docs/interactions/application-commands#slash-commands
 	 */
 	if (type == 2) {
+		// Get the slash command name
 		const { name } = data;
 
 		// "ping" command
@@ -130,7 +137,6 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 
 		// "react" command
 		else if (name == "react") {
-			console.log("Reacting to message")
 			return res.send({
 				type: 4,
 				data: {
@@ -140,13 +146,47 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 			});
 		}
 
+		// "suggestion" command
+		else if (name == "suggestion") {
+			return res.send({
+				type: 9,
+				data: {
+					title: "Add suggestion",
+					custom_id: "add suggestion",
+					components: [{
+						type: 1,
+						components: [
+							{
+								type: 4,
+								custom_id: "suggestion_title",
+								label: "Your suggestion",
+								style: 1,
+								placeholder: "Super cool suggestion name",
+								required: true
+							},
+							{
+								type: 4,
+								custom_id: "suggestion_body",
+								label: "Description",
+								style: 2,
+								placeholder: "Add X because Y...",
+								required: false
+							}
+						]
+					}]
+				}
+			})
+		}
+
 		console.error(`unknown command: ${name}`);
 		return res.status(400).json({ error: 'unknown command' });
 	}
 
-	// Component interactions like clicking on a button
+	// Handle component interactions like clicking on a button
 	else if (type == 3) {
+		// Get the ID of the component interaction
 		const { custom_id } = data
+
 		// The ping again button
 		if (custom_id == "ping again") {
 			return pingCommand(res);
@@ -171,21 +211,17 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 					// Reply with a test modal
 					title: "Yup, the test modal worked",
 					custom_id: "test modal submit",
-					components: [
-						{
-							type: 1,
-							components: [
-								{
-									type: 4,
-									custom_id: "test text input",
-									label: "Test text",
-									style: 1,
-									placeholder: "Yeah, it worked",
-									required: true
-								}
-							]
-						}
-					]
+					components: [{
+						type: 1,
+						components: [{
+							type: 4,
+							custom_id: "test text input",
+							label: "Test text",
+							style: 1,
+							placeholder: "Yeah, it worked",
+							required: true
+						}]
+					}]
 				}
 			});
 		}
@@ -196,6 +232,7 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 
 	// Modal submits
 	else if (type == 5) {
+		console.log(data)
 		const { custom_id, components } = data
 
 		let component = components[0].components
@@ -207,22 +244,37 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 				type: 4,
 				data: {
 					// Reply with a message asking what to test
-					content: "Test text inputted in modal: " + component[0].value,
+					content: "Test text inputted in modal: " + component[0].value
 				}
 			});
 		}
 
-		console.error(`unknown customID: ${custom_id}`);
+		// The testing modal
+		if (custom_id == "add suggestion") {
+			let suggestion = `${component[0]}: ${component[1]} - ${username}`
+			fs.appendFileSync("suggestions.txt", suggestion)
+			// Send an ephemeral thank you message
+			return res.send({
+				type: 4,
+				data: {
+					// Reply with an ephemeral message asking what to test
+					content: "Thank you for your submission!",
+					flags: bitField(6)
+				}
+			});
+		}
+
+		console.error("unknown customID:", custom_id);
 		return res.status(400).json({ error: 'unknown customID' });
 	}
 
-	console.error('unknown interaction type', type);
-	return res.status(400).json({ error: 'unknown interaction type' });
+	console.error("unknown interaction type", type);
+	return res.status(400).json({ error: "unknown interaction type" });
 });
 
 // Start the express app
 var server = app.listen(port, () => {
-	console.log('Listening on port', port);
+	console.log("Listening on port", port);
 });
 
 // Start ngrok if not using raspberry pi

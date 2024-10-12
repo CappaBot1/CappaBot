@@ -11,10 +11,9 @@
   "scripts": {
     "start": "node app.js",
     "register": "node commands.js",
-    "dev": "nodemon app.js",
-    "main": "node main.js"
+    "dev": "nodemon app.js"
   },
-  "author": "Shay DeWael",
+  "author": "Casper Howse",
   "license": "MIT",
   "dependencies": {
     "@ngrok/ngrok": "^1.4.1",
@@ -26,5 +25,11 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.0"
+  },
+  "nodemonConfig": {
+    "watch": "*.*",
+    "ignore": [
+      "suggestions.txt"
+    ]
   }
 }

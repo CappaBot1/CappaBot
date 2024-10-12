@@ -44,6 +44,19 @@ export async function InstallGlobalCommands(commands) {
 	}
 }
 
+// Make a bitfield from an array, number, or string of numbers
+export function bitField(bits) {
+	// Convert stuff to array format
+	if (typeof bits == "number") bits = bits.toString();
+	if (typeof bits == "string") bits = bits.split("");
+
+	let result = 0
+	for (let i = 0; i < bits.length; i ++) {
+		result += 1 << bits[i]
+	}
+	return result
+}
+
 // Ping command interaction response
 export function pingCommand(res) {
 	return res.send({
