@@ -64,19 +64,15 @@ export function pingCommand(res) {
 		data: {
 			// Reply with pong and a button to ping again
 			content: "Pong!",
-			components: [
-				{
-					type: 1,
-					components: [
-						{
-							type: 2,
-							style: 1,
-							label: "Again!",
-							custom_id: "ping again"
-						}
-					]
-				}
-			]
+			components: [{
+				type: 1,
+				components: [{
+					type: 2,
+					style: 1,
+					label: "Again!",
+					custom_id: "ping again"
+				}]
+			}]
 		}
 	});
 }

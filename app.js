@@ -16,13 +16,39 @@ console.log("Starting CappaBot...");
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+const suggestionModal = {
+	type: 4,
+	data: {
+		// Reply with a message asking what to test
+		content: "What would you like to test?",
+		components: [{
+			type: 1,
+			components: [
+				{
+					type: 2,
+					style: 3,
+					label: "Message",
+					custom_id: "test message"
+				},
+				{
+					type: 2,
+					style: 3,
+					label: "Modal",
+					custom_id: "test modal"
+				}
+			]
+		}]
+	}
+}
+
 // Suppress that random warning that keeps popping up
 process.env.NODE_NO_WARNINGS = 'stream/web';
 
-// Create an express app
-const app = express();
 // Get port, or default to 3000
 const port = process.env.PORT || 3000;
+
+// Create an express app
+const app = express();
 
 // Check if CappaBot is working
 app.get("/", function (req, res) {
@@ -112,25 +138,23 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 				data: {
 					// Reply with a message asking what to test
 					content: "What would you like to test?",
-					components: [
-						{
-							type: 1,
-							components: [
-								{
-									type: 2,
-									style: 3,
-									label: "Message",
-									custom_id: "test message"
-								},
-								{
-									type: 2,
-									style: 3,
-									label: "Modal",
-									custom_id: "test modal"
-								}
-							]
-						}
-					]
+					components: [{
+						type: 1,
+						components: [
+							{
+								type: 2,
+								style: 3,
+								label: "Message",
+								custom_id: "test message"
+							},
+							{
+								type: 2,
+								style: 3,
+								label: "Modal",
+								custom_id: "test modal"
+							}
+						]
+					}]
 				}
 			});
 		}
@@ -149,34 +173,7 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 		// "suggestions" command
 		else if (name == "suggestions") {
 			console.log("Getting suggestion");
-			return res.send({
-				type: 9,
-				data: {
-					title: "Add suggestion",
-					custom_id: "add suggestion",
-					components: [{
-						type: 1,
-						components: [
-							{
-								type: 4,
-								custom_id: "suggestion_title",
-								label: "Your suggestion",
-								style: 1,
-								placeholder: "Super cool suggestion name",
-								required: true
-							},
-							{
-								type: 4,
-								custom_id: "suggestion_body",
-								label: "Description",
-								style: 2,
-								placeholder: "Add X because Y...",
-								required: false
-							}
-						]
-					}]
-				}
-			})
+			return res.send(suggestionModal);
 		}
 
 		console.error(`unknown command: ${name}`);
@@ -225,6 +222,38 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 					}]
 				}
 			});
+		}
+
+		// Add suggestion button
+		else if (custom_id == "add suggestion modal") {
+			return res.send({
+				type: 9,
+				data: {
+					title: "Add suggestion",
+					custom_id: "add suggestion",
+					components: [{
+						type: 1,
+						components: [
+							{
+								type: 4,
+								custom_id: "suggestion_title",
+								label: "Your suggestion",
+								style: 1,
+								placeholder: "Super cool suggestion name",
+								required: true
+							},
+							{
+								type: 4,
+								custom_id: "suggestion_body",
+								label: "Description",
+								style: 2,
+								placeholder: "Add X because Y...",
+								required: false
+							}
+						]
+					}]
+				}
+			})
 		}
 
 		console.error(`unknown customID: ${custom_id}`);
