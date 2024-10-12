@@ -156,13 +156,13 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 						components: [
 							{
 								type: 2,
-								style: 3,
+								style: 2,
 								label: "Add suggestion",
 								custom_id: "add suggestion modal"
 							},
 							{
 								type: 2,
-								style: 3,
+								style: 2,
 								label: "View suggestions",
 								custom_id: "view suggestions"
 							}
