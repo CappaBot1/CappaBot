@@ -148,6 +148,7 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 
 		// "suggestions" command
 		else if (name == "suggestions") {
+			console.log("Getting suggestion");
 			return res.send({
 				type: 9,
 				data: {
