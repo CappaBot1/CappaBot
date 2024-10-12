@@ -308,7 +308,11 @@ app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 	return res.status(400).json({ error: "unknown interaction type" });
 });
 
-// Start the express app
-var server = app.listen(port, () => {
-	console.log("Listening on port", port);
-});
+try {
+	// Start the express app
+	var server = app.listen(port, () => {
+		console.log("Listening on port", port);
+	});
+} catch {
+	fs.appendFileSync("crashEpochs.txt", "Error at Epoch (ms): " + Date.now())
+}
