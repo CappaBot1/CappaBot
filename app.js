@@ -10,7 +10,7 @@ import * as fs from 'node:fs';
 import { pingCommand, getReactionImage, bitField } from './utils.js';
 
 // Starting message
-console.log("----------------------------------------------------------------")
+console.log("----------------------------------------------------------------");
 console.log("Starting CappaBot...");
 
 var suggestions;
