@@ -14,13 +14,13 @@ console.log("----------------------------------------------------------------")
 console.log("Starting CappaBot...");
 
 var suggestions;
-/*fs.readFile("suggestions.txt", (err, data) => {
+fs.readFile("suggestions.txt", (err, data) => {
     if (err) {
         throw err;
     }
     suggestions = data;
 });
-*/
+
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
