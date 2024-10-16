@@ -3,11 +3,14 @@ import { verifyKeyMiddleware } from 'discord-interactions';
 import { pingCommand, getReactionImage, bitField } from './utils.js';
 import * as fs from 'node:fs';
 
-// Starting message
+// Loading message
 console.log("----------------------------------------------------------------")
-console.log("Starting CappaBot...");
+console.log("Loading CappaBot...");
 
 export async function start(app) {
+    // Starting message
+    console.log("----------------------------------------------------------------")
+    console.log("Starting CappaBot...");
     /**
      * Interactions endpoint URL where Discord will send HTTP requests
      * Parse request body and verifies incoming requests using discord-interactions package
