@@ -7,7 +7,7 @@ import { dirname } from 'path';
 import { start } from './cappabot.js'
 
 // Starting message
-console.log("----------------------------------------------------------------")
+console.log("----------------------------------------------------------------");
 console.log("Starting Express App...");
 
 // Make a fake __dirname
