@@ -10,8 +10,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "register": "node commands.js",
-    "dev": "nodemon app.js"
+    "register": "node commands.js"
   },
   "author": "Casper Howse",
   "license": "MIT",
@@ -20,14 +19,5 @@
     "discord-interactions": "^4.0.0",
     "dotenv": "^16.0.3",
     "express": "^4.21.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.0"
-  },
-  "nodemonConfig": {
-    "ext": "*",
-    "ignore": [
-      "suggestions.txt"
-    ]
   }
 }
