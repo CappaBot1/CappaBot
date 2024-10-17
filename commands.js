@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { InstallGlobalCommands } from './utils.js';
 
-
+// Define all of the commands to show to the end user
 const ALL_COMMANDS = [
 	{
 		name: "ping",
@@ -19,6 +19,10 @@ const ALL_COMMANDS = [
 		type: 3,
 		name: "react",
 		integration_types: [0, 1]
+	},
+	{
+		name: "get",
+		description: "Add this bot to your server/user and also get information about it"
 	}
 ];
 

@@ -51,13 +51,11 @@ export async function start(app) {
                             components: [
                                 {
                                     type: 2,
-                                    style: 3,
                                     label: "Message",
                                     custom_id: "test message"
                                 },
                                 {
                                     type: 2,
-                                    style: 3,
                                     label: "Modal",
                                     custom_id: "test modal"
                                 }
@@ -65,6 +63,27 @@ export async function start(app) {
                         }]
                     }
                 });
+            }
+
+            // "get" command
+            else if (name == "get") {
+                return res.send({
+                    type: 4,
+                    data: {
+                        content: "What would you like to?",
+                        components: [{
+                            type: 1,
+                            components: [
+                                {
+                                    type: 2,
+                                    style: 5,
+                                    label: "Add to server/user",
+                                    url: "https://discord.com/oauth2/authorize?client_id=" + process.env.APP_ID
+                                } // todo: add more stuff to this command
+                            ]
+                        }]
+                    }
+                })
             }
 
             // "react" command
