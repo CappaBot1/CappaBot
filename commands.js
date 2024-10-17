@@ -35,3 +35,7 @@ export function register() {
 	
 	InstallGlobalCommands(ALL_COMMANDS);
 }
+
+if (require.main === module) {
+	register()
+}
