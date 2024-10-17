@@ -77,11 +77,15 @@ export async function start() {
 
             // "update" command
             else if (name == "update") {
-                register();
+                let message = "You're not the owner 🤬";
+                if (body.user.username == "cappabot") {
+                    message = "It probably worked idk";
+                    register();
+                }
                 return res.send({
                     type: 4,
                     data: {
-                        content: "It probably worked idk",
+                        content: message,
                         flags: bitField(6)
                     }
                 })
@@ -326,4 +330,8 @@ export async function start() {
     app.listen(port, () => {
         console.log("CappaBot listening on port", port);
     });
+
+    // Closing message
+    console.log("----------------------------------------------------------------");
+    console.log("CappaBot died :(")
 }
