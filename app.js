@@ -4,7 +4,8 @@ import { exec } from 'child_process'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-import { start } from './cappabot.js'
+import { bitField } from './utils.js';
+import { start } from './cappabot.js';
 
 // Starting message
 console.log("----------------------------------------------------------------");
