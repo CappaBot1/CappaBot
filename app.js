@@ -15,8 +15,8 @@ var server;
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// Port is 6969
-const port = 6969;
+// Define app port
+const port = 8080;
 
 // Create an express app
 const app = express();
@@ -80,5 +80,5 @@ try {
 
 // Start the express app
 server = app.listen(port, () => {
-	console.log("Listening on port", port);
+	console.log("App listening on port", port);
 });
