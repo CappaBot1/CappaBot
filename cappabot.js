@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { verifyKeyMiddleware } from 'discord-interactions';
 import * as fs from 'node:fs';
+import express from 'express';
 
 import { pingCommand } from './utils.js'
 import { register } from './commands.js'
