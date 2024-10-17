@@ -10,6 +10,8 @@ import { start } from './cappabot.js'
 console.log("----------------------------------------------------------------");
 console.log("Starting Express App...");
 
+var server;
+
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -73,7 +75,7 @@ function verifyGithub(req) {
 start(app);
 
 // Start the express app
-var server = app.listen(port, () => {
+server = app.listen(port, () => {
 	console.log("Listening on port", port);
 });
 
