@@ -10,7 +10,7 @@ import { register } from './commands.js';
 console.log("----------------------------------------------------------------");
 console.log("Loading CappaBot...");
 
-export async function start(app) {
+export async function start() {
     // Starting message
     console.log("----------------------------------------------------------------");
     console.log("Starting CappaBot...");
