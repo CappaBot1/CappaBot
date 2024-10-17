@@ -36,6 +36,6 @@ export function register() {
 	InstallGlobalCommands(ALL_COMMANDS);
 }
 
-if (require.main === module) {
+if (!module.parent) {
 	register()
 }
