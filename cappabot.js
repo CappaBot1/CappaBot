@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { verifyKeyMiddleware } from 'discord-interactions';
 import * as fs from 'node:fs';
 
-import register from './commands.js'
+import { register } from './commands.js'
 
 // Loading message
 console.log("----------------------------------------------------------------")
