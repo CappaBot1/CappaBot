@@ -64,11 +64,13 @@ export async function start() {
                             components: [
                                 {
                                     type: 2,
+                                    style: 2,
                                     label: "Message",
                                     custom_id: "test message"
                                 },
                                 {
                                     type: 2,
+                                    style: 2,
                                     label: "Modal",
                                     custom_id: "test modal"
                                 }
