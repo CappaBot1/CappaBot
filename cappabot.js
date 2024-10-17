@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { verifyKeyMiddleware } from 'discord-interactions';
 import * as fs from 'node:fs';
 
+import { pingCommand } from './utils.js'
 import { register } from './commands.js'
 
 // Loading message
@@ -68,7 +69,7 @@ export async function start(app) {
 
             // "update" command
             else if (name == "update") {
-                register()
+                register();
                 return res.send({
                     type: 4,
                     data: {
@@ -124,7 +125,6 @@ export async function start(app) {
 
             // "suggestions" command
             else if (name == "suggestions") {
-                console.log("Getting suggestion command");
                 return res.send({
                     type: 4,
                     data: {
