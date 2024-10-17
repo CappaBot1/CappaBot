@@ -3,16 +3,16 @@ import { verifyKeyMiddleware } from 'discord-interactions';
 import * as fs from 'node:fs';
 import express from 'express';
 
-import { pingCommand } from './utils.js'
-import { register } from './commands.js'
+import { pingCommand } from './utils.js';
+import { register } from './commands.js';
 
 // Loading message
-console.log("----------------------------------------------------------------")
+console.log("----------------------------------------------------------------");
 console.log("Loading CappaBot...");
 
 export async function start() {
     // Starting message
-    console.log("----------------------------------------------------------------")
+    console.log("----------------------------------------------------------------");
     console.log("Starting CappaBot...");
 
     // Port is 3000
@@ -166,7 +166,7 @@ export async function start() {
         // Component interactions
         else if (type == 3) {
             // Get the ID of the component interaction
-            const { custom_id } = data
+            const { custom_id } = data;
 
             // The ping again button
             if (custom_id == "ping again") {
@@ -209,7 +209,6 @@ export async function start() {
 
             // Add suggestion button
             else if (custom_id == "add suggestion modal") {
-                console.log("Suggestion modal")
                 return res.send({
                     type: 9,
                     data: {
@@ -245,7 +244,7 @@ export async function start() {
 
             // View suggestions button
             else if (custom_id == "view suggestions") {
-                console.log("Suggestions:", suggestions)
+                console.log("Suggestions:", suggestions);
                 return res.send({
                     type: 7,
                     data: {
@@ -260,18 +259,18 @@ export async function start() {
 
         // Modal submits
         else if (type == 5) {
-            console.log(data)
-            const { custom_id, components } = data
+            console.log(data);
+            const { custom_id, components } = data;
 
-            let inputs = []
-            let value = ""
+            let inputs = [];
+            let value = "";
             for (let i = 0; i < 5; i ++) {
                 try {
-                    value = components[0][i].value
+                    value = components[0][i].value;
                 } catch {
-                    value = ""
+                    value = "";
                 } finally {
-                    inputs.push(value)
+                    inputs.push(value);
                 }
             }
 

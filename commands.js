@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { InstallGlobalCommands } from './utils.js';
 
 export function register() {
-	console.log("Registering commands...")
+	console.log("Registering commands...");
 	// Define all of the commands to show to the end user
 	const ALL_COMMANDS = [
 		{
@@ -36,5 +36,5 @@ export function register() {
 	
 	// Register the commands
 	InstallGlobalCommands(ALL_COMMANDS);
-	console.log("Commands registered.")
+	console.log("Commands registered.");
 }

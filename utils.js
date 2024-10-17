@@ -52,7 +52,7 @@ export function bitField(bits) {
 
 	let result = 0
 	for (let i = 0; i < bits.length; i ++) {
-		result += 1 << bits[i]
+		result += 1 << bits[i];
 	}
 	return result
 }
@@ -79,13 +79,13 @@ export function pingCommand(res) {
 
 // Get a random reaction image from the reactionImages github repo
 export async function getReactionImage() {
-	let imageURLs = []
-	const response = (await fetch("https://api.github.com/repos/CappaBot1/reactionImages/contents", {method: "GET"}))
+	let imageURLs = [];
+	const response = (await fetch("https://api.github.com/repos/CappaBot1/reactionImages/contents", {method: "GET"}));
 	
-	let repoContents = await response.json()
+	let repoContents = await response.json();
 
 	for (let i = 0; i < repoContents.length; i ++) {
-		imageURLs.push("https://raw.githubusercontent.com/CappaBot1/reactionImages/refs/heads/main/" + repoContents[i].name)
+		imageURLs.push("https://raw.githubusercontent.com/CappaBot1/reactionImages/refs/heads/main/" + repoContents[i].name);
 	}
 
 	return imageURLs[Math.floor(Math.random()*imageURLs.length)]

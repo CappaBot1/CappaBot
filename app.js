@@ -75,7 +75,7 @@ function verifyGithub(req) {
 try {
 	start(app);
 } catch (err) {
-	console.log("Error:", err)
+	console.log("Error:", err);
 }
 
 // Start the express app
