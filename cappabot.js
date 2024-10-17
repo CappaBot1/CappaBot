@@ -332,7 +332,7 @@ export async function start() {
     });
 
     // Start the express app
-    server = app.listen(port, () => {
+    app.listen(port, () => {
         console.log("CappaBot listening on port", port);
     });
 }
