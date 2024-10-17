@@ -10,17 +10,17 @@ import { register } from './commands.js';
 console.log("----------------------------------------------------------------");
 console.log("Loading CappaBot...");
 
-export async function start() {
+export async function start(app) {
     // Starting message
     console.log("----------------------------------------------------------------");
     console.log("Starting CappaBot...");
-    
+    /*
     // Define CappaBot port
     const port = 6969;
     
     // Create an express app
     const app = express();
-    
+    */
     /**
      * Interactions endpoint URL where Discord will send HTTP requests
      * Parse request body and verifies incoming requests using discord-interactions package
@@ -330,9 +330,10 @@ export async function start() {
         console.error("unknown interaction type", type);
         return res.status(400).json({ error: "unknown interaction type" });
     });
-
+    /*
     // Start the express app
     app.listen(port, () => {
         console.log("CappaBot listening on port", port);
     });
+    */
 }
