@@ -25,7 +25,7 @@ export async function start() {
      * Interactions endpoint URL where Discord will send HTTP requests
      * Parse request body and verifies incoming requests using discord-interactions package
      */
-    app.post("/interactions", /*verifyKeyMiddleware(process.env.PUBLIC_KEY), */async function (req, res) {
+    app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async function (req, res) {
         // Interaction type and data
         const body = req.body;
         const { type, data } = body;
