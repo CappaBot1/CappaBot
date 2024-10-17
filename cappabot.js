@@ -79,7 +79,19 @@ export async function start(app) {
                                     style: 5,
                                     label: "Add to server/user",
                                     url: "https://discord.com/oauth2/authorize?client_id=" + process.env.APP_ID
-                                } // todo: add more stuff to this command
+                                },
+                                {
+                                    type: 2,
+                                    style: 5,
+                                    label: "Join the official server",
+                                    url: "https://discord.gg/HxThbHWG46"
+                                },
+                                {
+                                    type: 2,
+                                    style: 5,
+                                    label: "Check out the website",
+                                    url: "https://comic-python-topical.ngrok-free.app/website"
+                                }
                             ]
                         }]
                     }
