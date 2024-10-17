@@ -16,7 +16,7 @@ export async function start(app) {
     console.log("Starting CappaBot...");
     /*
     // Define CappaBot port
-    const port = 6969;
+    const port = 3000;
     
     // Create an express app
     const app = express();

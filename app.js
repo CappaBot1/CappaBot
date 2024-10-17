@@ -16,7 +16,7 @@ var server;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Define app port
-const port = 8080;
+const port = 6969;
 
 // Create an express app
 const app = express();
