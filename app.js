@@ -72,17 +72,16 @@ function verifyGithub(req) {
 }
 
 // Start Cappa Bot
-start(app);
-
 try {
-	// Start the express app
-	server = app.listen(port, () => {
-		console.log("Listening on port", port);
-	});
+	start(app);
 } catch (err) {
 	console.log("Error:", err)
 }
 
+// Start the express app
+server = app.listen(port, () => {
+	console.log("Listening on port", port);
+});
 
 // Closing message
 console.log("----------------------------------------------------------------");
