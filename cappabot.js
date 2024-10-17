@@ -1,7 +1,8 @@
 import 'dotenv/config';
 import { verifyKeyMiddleware } from 'discord-interactions';
-import { pingCommand, getReactionImage, bitField } from './utils.js';
 import * as fs from 'node:fs';
+
+import register from './commands.js'
 
 // Loading message
 console.log("----------------------------------------------------------------")
@@ -20,7 +21,7 @@ export async function start(app) {
         const body = req.body;
         const { type, data } = body;
 
-        //console.log(body);
+        console.log(body);
 
         console.log(`Got interaction of type: ${type}`);
 
@@ -63,6 +64,18 @@ export async function start(app) {
                         }]
                     }
                 });
+            }
+
+            // "update" command
+            else if (name == "update") {
+                register()
+                return res.send({
+                    type: 4,
+                    data: {
+                        content: "It probably worked idk",
+                        flags: bitField(6)
+                    }
+                })
             }
 
             // "get" command
