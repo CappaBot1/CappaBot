@@ -10,7 +10,7 @@ import { register } from './commands.js';
 console.log("----------------------------------------------------------------");
 console.log("Loading CappaBot...");
 
-export async function start() {
+export async function start(app) {
     // Starting message
     console.log("----------------------------------------------------------------");
     console.log("Starting CappaBot...");
@@ -19,13 +19,13 @@ export async function start() {
     const port = 3000;
 
     // Create an express app
-    const cappaApp = express();
+    const app = express();
     
     /**
      * Interactions endpoint URL where Discord will send HTTP requests
      * Parse request body and verifies incoming requests using discord-interactions package
      */
-    cappaApp.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async function (req, res) {
+    app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async function (req, res) {
         // Interaction type and data
         const body = req.body;
         const { type, data } = body;
@@ -332,7 +332,7 @@ export async function start() {
     });
 
     // Start the express app
-    cappaApp.listen(port, () => {
+    app.listen(port, () => {
         console.log("CappaBot listening on port", port);
     });
 }

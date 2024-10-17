@@ -73,7 +73,7 @@ function verifyGithub(req) {
 
 // Start Cappa Bot
 try {
-	start();
+	start(app);
 } catch (err) {
 	console.log("Error:", err);
 }
