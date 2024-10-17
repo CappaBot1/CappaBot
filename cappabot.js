@@ -44,6 +44,9 @@ export async function start() {
             // Get the slash command name
             const { name } = data;
 
+            // Log name
+            console.log("Name:", name)
+
             // "ping" command
             if (name == "ping") {
                 return pingCommand(res);
