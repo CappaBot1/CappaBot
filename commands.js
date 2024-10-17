@@ -35,7 +35,3 @@ export function register() {
 	
 	InstallGlobalCommands(ALL_COMMANDS);
 }
-
-if (!module.parent) {
-	register()
-}
