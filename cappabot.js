@@ -335,8 +335,4 @@ export async function start() {
     app.listen(port, () => {
         console.log("CappaBot listening on port", port);
     });
-
-    // Closing message
-    console.log("----------------------------------------------------------------");
-    console.log("CappaBot died :(")
 }
