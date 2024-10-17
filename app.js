@@ -82,7 +82,3 @@ try {
 server = app.listen(port, () => {
 	console.log("Listening on port", port);
 });
-
-// Closing message
-console.log("----------------------------------------------------------------");
-console.log("CappaBot program ending...");
