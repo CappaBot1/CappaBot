@@ -15,8 +15,8 @@ export async function start() {
     console.log("----------------------------------------------------------------")
     console.log("Starting CappaBot...");
 
-    // Get port, or default to 3000
-    const port = process.env.PORT || 3000;
+    // Port is 3000
+    const port = 3000;
 
     // Create an express app
     const app = express();

@@ -15,8 +15,8 @@ var server;
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// Get port, or default to 3000
-const port = process.env.PORT || 3000;
+// Port is 8080
+const port = 8080;
 
 // Create an express app
 const app = express();
