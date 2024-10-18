@@ -145,6 +145,12 @@ export async function start(app) {
                 return res.send({
                     type: 4,
                     data: {
+                        content: "This command is not available rn. (Unlucky ig)"
+                    }
+                });
+                /*return res.send({
+                    type: 4,
+                    data: {
                         // Reply with a message with action buttons
                         content: "What do you want to do?",
                         components: [{
@@ -165,7 +171,7 @@ export async function start(app) {
                             ]
                         }]
                     }
-                });
+                });*/
             }
 
             console.error(`unknown command: ${name}`);
