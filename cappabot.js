@@ -1,31 +1,5 @@
-import 'dotenv/config';
-import { verifyKeyMiddleware } from 'discord-interactions';
-import * as fs from 'node:fs';
-import express from 'express';
-
-import { pingCommand, bitField } from './utils.js';
-import { register } from './commands.js';
-
-// Loading message
-console.log("----------------------------------------------------------------");
-console.log("Loading CappaBot...");
-
-export async function start(app) {
-    // Starting message
-    console.log("----------------------------------------------------------------");
-    console.log("Starting CappaBot...");
-    /*
-    // Define CappaBot port
-    const port = 3000;
-    
-    // Create an express app
-    const app = express();
-    */
-    /**
-     * Interactions endpoint URL where Discord will send HTTP requests
-     * Parse request body and verifies incoming requests using discord-interactions package
-     */
-    app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), async function (req, res) {
+export async function handleInteraction(req, res) {
+    try {
         // Interaction type and data
         const body = req.body;
         const { type, data } = body;
@@ -142,13 +116,13 @@ export async function start(app) {
 
             // "suggestions" command
             else if (name == "suggestions") {
-                return res.send({
+                /*return res.send({
                     type: 4,
                     data: {
                         content: "This command is not available rn. (Unlucky ig)"
                     }
-                });
-                /*return res.send({
+                });*/
+                return res.send({
                     type: 4,
                     data: {
                         // Reply with a message with action buttons
@@ -171,7 +145,7 @@ export async function start(app) {
                             ]
                         }]
                     }
-                });*/
+                });
             }
 
             console.error(`unknown command: ${name}`);
@@ -335,11 +309,7 @@ export async function start(app) {
 
         console.error("unknown interaction type", type);
         return res.status(400).json({ error: "unknown interaction type" });
-    });
-    /*
-    // Start the express app
-    app.listen(port, () => {
-        console.log("CappaBot listening on port", port);
-    });
-    */
+    } catch (err) {
+        console.log(err)
+    }
 }

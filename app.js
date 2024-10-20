@@ -3,8 +3,9 @@ import express from 'express';
 import { exec } from 'child_process'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { verifyKeyMiddleware } from 'discord-interactions';
 
-import { start } from './cappabot.js';
+import { handleInteraction } from './cappabot.js';
 
 // Starting message
 console.log("----------------------------------------------------------------");
@@ -71,12 +72,11 @@ function verifyGithub(req) {
 	return true
 }
 
-// Start Cappa Bot
-try {
-	start(app);
-} catch (err) {
-	console.log("Error:", err);
-}
+// Starting message
+console.log("----------------------------------------------------------------");
+console.log("Starting CappaBot...");
+
+app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), handleInteraction);
 
 // Start the express app
 server = app.listen(port, () => {
