@@ -45,7 +45,8 @@ app.post("/github", function (req, res) {
 	if (verifyGithub(req)) {
 		console.log("Request verified.");
 		exec("git pull",
-			() => {
+			(something) => {
+				console.log(something);
 				server.close();
 				return res.send("Yeah man.");
 			});
