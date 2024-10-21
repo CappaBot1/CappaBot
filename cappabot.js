@@ -268,7 +268,7 @@ export async function handleInteraction(req, res) {
                 console.log("Suggestions:", db.suggestions);
                 let suggestions = "Suggestions:";
                 for (let i = 0; i < db.suggestions.length; i ++) {
-                    suggestions = `\n${i+1})${suggestions[i].title}\n    ${suggestions[i].description}`
+                    suggestions = `\n${i+1}) ${suggestions[i].title}\n        ${suggestions[i].description}`
                 }
                 return res.send({
                     type: 7,

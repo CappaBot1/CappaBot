@@ -57,7 +57,7 @@ app.post("/github", function (req, res) {
 				if (stdout == "Already up to date.\n") {
 					updateStatus = "I didn't update.";
 				} else {
-					fs.writeFile('db', JSON.stringify(db), server.close);
+					fs.writeFile('db.json', JSON.stringify(db), server.close);
 					updateStatus = "I updated.";
 				}
 				return res.send("Yeah man. " + updateStatus);
