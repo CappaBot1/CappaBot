@@ -56,37 +56,3 @@ export function bitField(bits) {
 	}
 	return result
 }
-
-// Ping command interaction response
-export function pingCommand(res) {
-	return res.send({
-		type: 4,
-		data: {
-			// Reply with pong and a button to ping again
-			content: "Pong!",
-			components: [{
-				type: 1,
-				components: [{
-					type: 2,
-					style: 1,
-					label: "Again!",
-					custom_id: "ping again"
-				}]
-			}]
-		}
-	});
-}
-
-// Get a random reaction image from the reactionImages github repo
-export async function getReactionImage() {
-	let imageURLs = [];
-	const response = (await fetch("https://api.github.com/repos/CappaBot1/reactionImages/contents", {method: "GET"}));
-	
-	let repoContents = await response.json();
-
-	for (let i = 0; i < repoContents.length; i ++) {
-		imageURLs.push("https://raw.githubusercontent.com/CappaBot1/reactionImages/refs/heads/main/" + repoContents[i].name);
-	}
-
-	return imageURLs[Math.floor(Math.random()*imageURLs.length)]
-}
