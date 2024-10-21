@@ -284,15 +284,15 @@ export async function handleInteraction(req, res) {
 
         // Modal submits
         else if (type == 5) {
-            console.log(data);
+            console.log("Data:", data);
             const { custom_id, components } = data;
-            console.log(components)
+            console.log("Components:", components);
             let inputs = [];
             let input = "";
             for (let i = 0; i < 5; i ++) {
                 try {
-                    console.log(components[i]);
-                    input = components[i];
+                    console.log("Component", i + ":", components[i][0]);
+                    input = components[i][0];
                 } catch {
                     input = "";
                 } finally {
