@@ -54,7 +54,7 @@ app.post("/github", function (req, res) {
 					server.close();
 					updateStatus = "I updated.";
 				}
-				return res.send("Yeah man.", updateStatus);
+				return res.send("Yeah man. " + updateStatus);
 			});
 	} else {
 		console.log("Request not verified.");
