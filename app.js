@@ -17,7 +17,7 @@ var server;
 // Load database
 export var db = JSON.parse(fs.readFileSync('db.json'), 'utf8') // Import the database
 
-console.log(db);
+console.log("Suggestions:", db);
 
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));

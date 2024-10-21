@@ -1,4 +1,5 @@
 import { register } from './commands.js'
+import { bitField } from './utils.js';
 import { db } from './app.js';
 
 function reloadSuggestions() {
