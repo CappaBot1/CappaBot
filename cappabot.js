@@ -1,5 +1,5 @@
 import { register } from './commands.js'
-import { save, db } from './app.js';
+import { db } from './app.js';
 
 function reloadSuggestions() {
     fs.readFile("./suggestions.txt", function (err, data) {
