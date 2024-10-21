@@ -291,13 +291,15 @@ export async function handleInteraction(req, res) {
             let value = "";
             for (let i = 0; i < 5; i ++) {
                 try {
-                    value = components[0][i].value;
+                    value = components[i].value;
                 } catch {
                     value = "";
                 } finally {
                     inputs.push(value);
                 }
             }
+
+            console.log(inputs);
 
             // The testing modal
             if (custom_id == "test modal submit") {
