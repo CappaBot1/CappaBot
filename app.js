@@ -14,10 +14,11 @@ console.log("Starting Express App...");
 
 var server;
 
-// Export suggestions to be used everywhere
-let suggestionsFile = fs.readFileSync("./suggestions.txt");
-console.log(suggestionsFile);
-export let suggestions = suggestionsFile;
+// Export the database
+import { db } from './db.json' assert { type: 'json' } // create a `db.json` file that contains {}
+
+export var db;
+export const save = () => fs.writeFile("./db.json", JSON.stringify(db), () => {})
 
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -57,6 +58,7 @@ app.post("/github", function (req, res) {
 				if (stdout == "Already up to date.\n") {
 					updateStatus = "I didn't update.";
 				} else {
+					save();
 					server.close();
 					updateStatus = "I updated.";
 				}

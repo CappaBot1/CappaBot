@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 
 import { register } from './commands.js'
-import { suggestions } from './app.js';
+import { db, save } from './app.js';
 
 function reloadSuggestions() {
     fs.readFile("./suggestions.txt", function (err, data) {
@@ -163,7 +163,6 @@ export async function handleInteraction(req, res) {
 
             // "suggestions" command
             else if (name == "suggestions") {
-                reloadSuggestions();
                 return res.send({
                     type: 4,
                     data: {
@@ -319,20 +318,9 @@ export async function handleInteraction(req, res) {
 
             // The add suggestion modal
             if (custom_id == "add suggestion") {
-                let suggestion = `${inputs[0]}: ${inputs[1]}\n`
-
-                // Append the suggestion to the file
-                fs.appendFile("suggestions.txt", suggestion, "utf-8", (err) => {
-                    if (err) {
-                        throw err;
-                    }
-                    fs.readFile("suggestions.txt", "utf-8", (err, data) => {
-                        if (err) {
-                            throw err;
-                        }
-                        suggestions = data;
-                    });
-                });
+                // Add the suggestion
+                db.suggestions.push({"title": inputs[0], "description": inputs[1]});
+                save();
                 
                 // Send an ephemeral thank you message
                 return res.send({
