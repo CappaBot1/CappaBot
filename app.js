@@ -17,6 +17,10 @@ var server;
 // Load database
 import { db } from './db.json' assert { type: 'json' } // Import the database
 
+console.log(db);
+
+export var db = db;
+
 export const save = () => fs.writeFile("./db.json", JSON.stringify(db), () => {})
 
 // Make a fake __dirname
