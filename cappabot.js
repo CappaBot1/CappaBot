@@ -272,7 +272,7 @@ export async function handleInteraction(req, res) {
 
             // View suggestions button
             else if (custom_id == "view suggestions") {
-                console.log("Suggestions:", suggestions);
+                console.log("Suggestions:", db.suggestions);
                 return res.send({
                     type: 7,
                     data: {
@@ -318,7 +318,6 @@ export async function handleInteraction(req, res) {
             if (custom_id == "add suggestion") {
                 // Add the suggestion
                 db.suggestions.push({"title": inputs[0], "description": inputs[1]});
-                save();
                 
                 // Send an ephemeral thank you message
                 return res.send({
