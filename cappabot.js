@@ -22,7 +22,7 @@ function pingCommand(res) {
 	});
 }
 
-// Get a random reaction image from the reactionImages github repo
+// Get a random reaction image from the https://github.com/CappaBot1/reactionImages github repo
 async function getReactionImage() {
 	let imageURLs = [];
 	const response = (await fetch("https://api.github.com/repos/CappaBot1/reactionImages/contents", {method: "GET"}));
@@ -286,17 +286,17 @@ export async function handleInteraction(req, res) {
         else if (type == 5) {
             console.log(data);
             const { custom_id, components } = data;
-
+            console.log(components)
             let inputs = [];
-            let value = "";
+            let input = "";
             for (let i = 0; i < 5; i ++) {
                 try {
-                    console.log(components[i][0]);
-                    value = components[i][0].value;
+                    console.log(components[i]);
+                    input = components[i];
                 } catch {
-                    value = "";
+                    input = "";
                 } finally {
-                    inputs.push(value);
+                    inputs.push(input);
                 }
             }
 
@@ -332,11 +332,11 @@ export async function handleInteraction(req, res) {
             }
 
             console.error("unknown customID:", custom_id);
-            return res.status(400).json({ error: 'unknown customID' });
+            return res.status(404).json({ error: 'unknown customID' });
         }
 
         console.error("unknown interaction type", type);
-        return res.status(400).json({ error: "unknown interaction type" });
+        return res.status(404).json({ error: "unknown interaction type" });
     } catch (err) {
         console.log(err)
     }
