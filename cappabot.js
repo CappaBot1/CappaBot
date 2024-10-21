@@ -266,10 +266,14 @@ export async function handleInteraction(req, res) {
             // View suggestions button
             else if (custom_id == "view suggestions") {
                 console.log("Suggestions:", db.suggestions);
+                let suggestions = "Suggestions:";
+                for (let i = 0; i < db.suggestions.length; i ++) {
+                    suggestions = `\n${i+1})${suggestions[i].title}\n    ${suggestions[i].description}`
+                }
                 return res.send({
                     type: 7,
                     data: {
-                        content: "Suggestions: " + db.suggestions
+                        content: suggestions
                     }
                 });
             }
