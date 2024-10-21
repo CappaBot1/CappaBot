@@ -1,9 +1,18 @@
 import fs from 'node:fs'
 
 import { register } from './commands.js'
+import { suggestions } from './app.js';
+
+function reloadSuggestions() {
+    fs.readFile("./suggestions.txt", function (err, data) {
+        console.log("Read suggestions file");
+        if (err) console.log("Error:", err);
+        else suggestions = data;
+    });
+}
 
 // Ping command interaction response
-export function pingCommand(res) {
+function pingCommand(res) {
 	return res.send({
 		type: 4,
 		data: {
@@ -23,7 +32,7 @@ export function pingCommand(res) {
 }
 
 // Get a random reaction image from the reactionImages github repo
-export async function getReactionImage() {
+async function getReactionImage() {
 	let imageURLs = [];
 	const response = (await fetch("https://api.github.com/repos/CappaBot1/reactionImages/contents", {method: "GET"}));
 	
@@ -154,12 +163,7 @@ export async function handleInteraction(req, res) {
 
             // "suggestions" command
             else if (name == "suggestions") {
-                /*return res.send({
-                    type: 4,
-                    data: {
-                        content: "This command is not available rn. (Unlucky ig)"
-                    }
-                });*/
+                reloadSuggestions();
                 return res.send({
                     type: 4,
                     data: {
