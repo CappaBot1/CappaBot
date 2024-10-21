@@ -48,7 +48,7 @@ app.post("/github", function (req, res) {
 			(error, stdout, stderr) => {
 				let updateStatus;
 				console.log("---" + stdout + "---");
-				if (stdout == "Already up to date.") {
+				if (stdout == "Already up to date.\n") {
 					console.log("Not updating because there is nothing to update.");
 					updateStatus = "I didn't update.";
 				} else {
