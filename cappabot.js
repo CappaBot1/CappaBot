@@ -2,14 +2,6 @@ import { register } from './commands.js'
 import { bitField } from './utils.js';
 import { db } from './app.js';
 
-function reloadSuggestions() {
-    fs.readFile("./suggestions.txt", function (err, data) {
-        console.log("Read suggestions file");
-        if (err) console.log("Error:", err);
-        else suggestions = data;
-    });
-}
-
 // Ping command interaction response
 function pingCommand(res) {
 	return res.send({
@@ -277,7 +269,7 @@ export async function handleInteraction(req, res) {
                 return res.send({
                     type: 7,
                     data: {
-                        content: suggestions
+                        content: db.suggestions
                     }
                 });
             }
