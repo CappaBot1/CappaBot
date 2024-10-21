@@ -269,7 +269,7 @@ export async function handleInteraction(req, res) {
                 return res.send({
                     type: 7,
                     data: {
-                        content: "bunger"
+                        content: "Suggestions: " + db.suggestions
                     }
                 });
             }
