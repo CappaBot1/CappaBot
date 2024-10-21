@@ -51,7 +51,7 @@ export async function handleInteraction(req, res) {
         const body = req.body;
         const { type, data } = body;
 
-        console.log(body);
+        //console.log(body);
 
         console.log(`Got interaction of type: ${type}`);
 
