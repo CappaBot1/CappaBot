@@ -1,7 +1,8 @@
 import fs from 'node:fs'
 
 import { register } from './commands.js'
-import { db, save } from './app.js';
+import { save } from './app.js';
+import { db } from './db.json' assert { type: 'json' } // Import the database
 
 function reloadSuggestions() {
     fs.readFile("./suggestions.txt", function (err, data) {

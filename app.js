@@ -14,10 +14,9 @@ console.log("Starting Express App...");
 
 var server;
 
-// Export the database
-import { db } from './db.json' assert { type: 'json' } // create a `db.json` file that contains {}
+// Load database
+import { db } from './db.json' assert { type: 'json' } // Import the database
 
-export var db;
 export const save = () => fs.writeFile("./db.json", JSON.stringify(db), () => {})
 
 // Make a fake __dirname
