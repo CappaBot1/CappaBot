@@ -46,9 +46,15 @@ app.post("/github", function (req, res) {
 		console.log("Request verified.");
 		exec("git pull",
 			(error, stdout, stderr) => {
-				console.log(error, stdout, stderr);
-				server.close();
-				return res.send("Yeah man.");
+				let updateStatus;
+				if (stdout == "Already up to date.") {
+					console.log("Not updating because there is nothing to update.");
+					updateStatus = "I didn't update.";
+				} else {
+					server.close();
+					updateStatus = "I updated.";
+				}
+				return res.send("Yeah man.", updateStatus);
 			});
 	} else {
 		console.log("Request not verified.");
