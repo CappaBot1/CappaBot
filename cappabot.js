@@ -268,7 +268,7 @@ export async function handleInteraction(req, res) {
                 console.log("Suggestions:", db.suggestions);
                 let suggestions = "Suggestions:";
                 for (let i = 0; i < db.suggestions.length; i ++) {
-                    suggestions = `\n${i+1}) ${suggestions[i].title}\n        ${suggestions[i].description}`
+                    suggestions = `${suggestions}\n${i+1}) ${suggestions[i].title}\n        ${suggestions[i].description}`
                 }
                 return res.send({
                     type: 7,
@@ -313,6 +313,7 @@ export async function handleInteraction(req, res) {
 
             // The add suggestion modal
             if (custom_id == "add suggestion") {
+                console.log("Adding suggestion:", inputs[0], inputs[1]);
                 // Add the suggestion
                 db.suggestions.push({"title": inputs[0], "description": inputs[1]});
                 
