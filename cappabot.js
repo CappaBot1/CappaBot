@@ -291,8 +291,8 @@ export async function handleInteraction(req, res) {
             let input = "";
             for (let i = 0; i < 5; i ++) {
                 try {
-                    console.log("Component", i + ":", components[i][0]);
-                    input = components[i][0];
+                    console.log("Component", i + ":", components[i].value);
+                    input = components[i].value;
                 } catch {
                     input = "";
                 } finally {
