@@ -15,7 +15,7 @@ console.log("Starting Express App...");
 var server;
 
 // Load database
-export var db = JSON.parse(fs.readFileSync('db'), 'utf8') // Import the database
+export var db = JSON.parse(fs.readFileSync('db.json'), 'utf8') // Import the database
 
 console.log(db);
 
