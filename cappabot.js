@@ -1,3 +1,5 @@
+import fs from 'node:fs'
+
 import { register } from './commands.js'
 
 // Ping command interaction response
@@ -55,7 +57,7 @@ export async function handleInteraction(req, res) {
             const { name } = data;
 
             // Log name
-            console.log("Name:", name)
+            console.log("Name:", name);
 
             // "ping" command
             if (name == "ping") {

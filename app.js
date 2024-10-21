@@ -4,6 +4,7 @@ import { exec } from 'child_process'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { verifyKeyMiddleware } from 'discord-interactions';
+import fs from 'node:fs';
 
 import { handleInteraction } from './cappabot.js';
 
@@ -12,6 +13,11 @@ console.log("----------------------------------------------------------------");
 console.log("Starting Express App...");
 
 var server;
+
+// Export suggestions to be used everywhere
+let suggestionsFile = fs.readFileSync("./suggestions.txt");
+console.log(suggestionsFile);
+export let suggestions = suggestionsFile;
 
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
