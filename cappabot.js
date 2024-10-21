@@ -1,4 +1,4 @@
-import { register } from './utils.js'
+import { register } from './commands.js'
 
 // Ping command interaction response
 export function pingCommand(res) {
