@@ -98,8 +98,11 @@ function verifyPostData(req, res, next) {
 	}
   
 	const sig = Buffer.from(req.get(sigHeaderName) || '', 'utf8');
+	console.log("Sig:", sig);
 	const hmac = crypto.createHmac(sigHashAlg, process.env.GITHUB_WEBHOOK_SECRET);
+	console.log("Hmac:", hmac);
 	const digest = Buffer.from(sigHashAlg + '=' + hmac.update(req.rawBody).digest('hex'), 'utf8');
+	console.log("Digest:", digest);
 	if (sig.length !== digest.length || !crypto.timingSafeEqual(digest, sig)) {
 		console.log("Request probably verified but idk");
 	  	return next(`Request body digest (${digest}) did not match ${sigHeaderName} (${sig})`);
