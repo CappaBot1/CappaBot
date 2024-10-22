@@ -35,6 +35,11 @@ app.get("/", function (req, res) {
 	return res.send("CappaBot is up 👍");
 });
 
+// Get the status
+app.get("/status", function (req, res) {
+	return res.send("✅");
+});
+
 // The website portion of CappaBot
 app.get("/website", function (req, res) {
 	res.sendFile(__dirname + "/index.html");
