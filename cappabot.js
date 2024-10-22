@@ -279,7 +279,7 @@ export async function handleInteraction(req, res) {
                 console.log("Suggestions:", db.suggestions);
                 let suggestions = "Suggestions:";
                 for (let i = 0; i < db.suggestions.length; i ++) {
-                    suggestions = `${suggestions}\n${i+1}) ${db.suggestions[i].title}\n            ${db.suggestions[i].description}`
+                    suggestions = `${suggestions}\n${i+1}) ${db.suggestions[i].title}\n        ${db.suggestions[i].description}`
                 }
                 console.log(suggestions);
                 console.log(db.suggestions[0]);
