@@ -15,7 +15,7 @@ console.log("Starting Express App...");
 var server;
 
 // Load database
-export var db = JSON.parse(fs.readFileSync('db.json'), 'utf8') // Import the database
+export var db = JSON.parse(fs.readFileSync("db.json"), "utf8") // Import the database
 
 console.log("Database:", db);
 console.log("Suggestions:", db.suggestions);
@@ -63,7 +63,7 @@ app.post("/github", function (req, res) {
 				if (stdout == "Already up to date.\n") {
 					updateStatus = "I didn't update.";
 				} else {
-					fs.writeFile('db.json', JSON.stringify(db), server.close);
+					fs.writeFile('db.json', JSON.stringify(db, undefined, 4), server.close);
 					updateStatus = "I updated.";
 				}
 				return res.send("Yeah man. " + updateStatus);
