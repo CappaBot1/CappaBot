@@ -51,31 +51,35 @@ app.get("/pico.min.css", function (req, res) {
 });
 
 // Use github webhooks for push requests so CappaBot can auto-update
-app.post("/github", function (req, res) {
-	console.log("Got request from github (maybe).");
+app.post("/github", verifyPostData, function (req, res) {
+	console.log("Request verified.");
+	exec("git pull", (error, stdout, stderr) => {
+		// Log the git output
+		console.log(stdout);
 
-	if (verifyGithub(req)) {
-		console.log("Request verified.");
-		exec("git pull",
-			(error, stdout, stderr) => {
-				let updateStatus;
-				console.log(stdout);
-				if (stdout == "Already up to date.\n") {
-					updateStatus = "I didn't update.";
-				} else {
-					updateStatus = "I updated.";
-					if (db) {
-						fs.writeFile('db.json', JSON.stringify(db, undefined, 4), () => {server.close()});
-					} else {
-						console.log("Database lost?");
-					}
-				}
-				return res.send("Yeah man." + updateStatus);
-			});
-	} else {
-		console.log("Request not verified.");
-		return res.status(401).send("Yeah nah.");
-	}
+		// Default to not updating
+		let updateStatus = "I didn't update.";
+
+		// Check if we actually need to update
+		if (!stdout == "Already up to date.\n") {
+			updateStatus = "I updated.";
+
+			// Write the database to storage for next time
+			if (db) {
+				fs.writeFile('db.json', JSON.stringify(db, undefined, 4), () => {server.close()});
+			} else {
+				console.log("Database lost?");
+			}
+		}
+		console.log(updateStatus);
+		return res.send("Yeah man." + updateStatus);
+	});
+});
+
+app.use("/github", (err, req, res, next) => {
+	if (err) console.error(err)
+	console.log("Prob not github here.")
+	res.status(403).send("Request body was not signed or verification failed.");
 });
 
 app.use("/github", bodyParser.json({
@@ -83,11 +87,28 @@ app.use("/github", bodyParser.json({
 		if (buf && buf.length) {
 			req.rawBody = buf.toString(encoding || 'utf8');
 		}
-	},
-}));
+	}
+}))
 
+function verifyPostData(req, res, next) {
+	console.log("Github verification coming in???")
+
+	if (!req.rawBody) {
+	  return next('Request body empty');
+	}
+  
+	const sig = Buffer.from(req.get(sigHeaderName) || '', 'utf8');
+	const hmac = crypto.createHmac(sigHashAlg, process.env.GITHUB_WEBHOOK_SECRET);
+	const digest = Buffer.from(sigHashAlg + '=' + hmac.update(req.rawBody).digest('hex'), 'utf8');
+	if (sig.length !== digest.length || !crypto.timingSafeEqual(digest, sig)) {
+		console.log("Request probably verified but idk");
+	  	return next(`Request body digest (${digest}) did not match ${sigHeaderName} (${sig})`);
+	}
+	console.log("Request might have been verified but idk");
+	return next()
+  }
 // Function used to verify if /github is being POSTed by the real github
-function verifyGithub(req) {
+/*function verifyGithub(req) {
 	// Verifying message
 	console.log("----------------------------------------------------------------");
 	console.log("Verifying payload...");
@@ -95,11 +116,9 @@ function verifyGithub(req) {
 	if (!req.headers["user-agent"].includes("GitHub-Hookshot")) {
 		return false;
 	}
-	console.log("Raw body:", req.rawBody);
-	let sig = "idk, still working on it"
-	console.log(crypto.timingSafeEqual(sig, req.headers["x-hub-signature"]));
+	
 	return true
-}
+}*/
 
 // Starting message
 console.log("----------------------------------------------------------------");
