@@ -50,11 +50,9 @@ app.get("/pico.min.css", function (req, res) {
 	res.sendFile(__dirname + "/pico.min.css");
 });
 
-app.use("/github", (err, req, res, next) => {
-	if (err) console.error(err)
-	console.log("Prob not github here.")
-	res.status(403).send("Request body was not signed or verification failed.");
-});
+// Github and stuff
+const sigHeaderName = 'X-Hub-Signature-256'
+const sigHashAlg = 'sha256'
 
 app.use("/github", bodyParser.json({
 	verify: (req, res, buf, encoding) => {
@@ -63,7 +61,7 @@ app.use("/github", bodyParser.json({
 			req.rawBody = "something or rather"//buf.toString(encoding || 'utf8');
 		}
 	}
-}))
+}));
 
 function verifyPostData(req, res, next) {
 	console.log("Github verification coming in???");
@@ -85,21 +83,8 @@ function verifyPostData(req, res, next) {
 	}
 	console.log("Request might have been verified but idk");
 	return next()
-  }
-// Function used to verify if /github is being POSTed by the real github
-/*function verifyGithub(req) {
-	// Verifying message
-	console.log("----------------------------------------------------------------");
-	console.log("Verifying payload...");
-	
-	if (!req.headers["user-agent"].includes("GitHub-Hookshot")) {
-		return false;
-	}
-	
-	return true
-}*/
+}
 
-// Use github webhooks for push requests so CappaBot can auto-update
 app.post("/github", verifyPostData, function (req, res) {
 	console.log("Request verified.");
 	exec("git pull", (error, stdout, stderr) => {
@@ -123,6 +108,12 @@ app.post("/github", verifyPostData, function (req, res) {
 		console.log(updateStatus);
 		return res.send("Yeah man." + updateStatus);
 	});
+});
+
+app.use("/github", (err, req, res, next) => {
+	if (err) console.error(err)
+	console.log("Prob not github here.")
+	res.status(403).send("Request body was not signed or verification failed.");
 });
 
 // Starting message
