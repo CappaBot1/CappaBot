@@ -5,6 +5,8 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { verifyKeyMiddleware } from "discord-interactions";
 import fs from "node:fs";
+import crypto from "crypto";
+import bodyParser from "body-parser"
 
 import { handleInteraction } from "./cappabot.js";
 import { noCircular } from "./utils.js";
@@ -76,22 +78,26 @@ app.post("/github", function (req, res) {
 	}
 });
 
+app.use("/github", bodyParser.json({
+	verify: (req, res, buf, encoding) => {
+		if (buf && buf.length) {
+			req.rawBody = buf.toString(encoding || 'utf8');
+		}
+	},
+}));
+
 // Function used to verify if /github is being POSTed by the real github
 function verifyGithub(req) {
 	// Verifying message
 	console.log("----------------------------------------------------------------");
 	console.log("Verifying payload...");
 	
-	if (!req.headers['user-agent'].includes('GitHub-Hookshot')) {
+	if (!req.headers["user-agent"].includes("GitHub-Hookshot")) {
 		return false;
 	}
-
-	let payload = req;
-	console.log("Request:", JSON.stringify(payload, noCircular(payload), 4));
-	let payload2 = payload.body;
-	console.log("Body:", JSON.stringify(payload2, noCircular(payload2), 4));
-	let payload3 = payload.payload;
-	console.log("Payload:", JSON.stringify(payload3, noCircular(payload3), 4));
+	console.log("Raw body:", req.rawBody);
+	let sig = "idk, still working on it"
+	console.log(crypto.timingSafeEqual(sig, req.headers["x-hub-signature"]));
 	return true
 }
 
