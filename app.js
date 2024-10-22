@@ -16,7 +16,7 @@ console.log("Starting Express App...");
 var server;
 
 // Import and load database
-export var db = JSON.parse(fs.readFileSync("db.json"), "utf8")
+export var db = JSON.parse(fs.readFileSync("db.json"), "utf8");
 
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -62,7 +62,11 @@ app.post("/github", function (req, res) {
 					updateStatus = "I didn't update.";
 				} else {
 					updateStatus = "I updated.";
-					fs.writeFile('db.json', JSON.stringify(db, undefined, 4), () => {server.close()});
+					if (db) {
+						fs.writeFile('db.json', JSON.stringify(db, undefined, 4), () => {server.close()});
+					} else {
+						console.log("Database lost?");
+					}
 				}
 				return res.send("Yeah man." + updateStatus);
 			});
