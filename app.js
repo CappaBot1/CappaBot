@@ -63,10 +63,10 @@ app.post("/github", function (req, res) {
 				if (stdout == "Already up to date.\n") {
 					updateStatus = "I didn't update.";
 				} else {
-					fs.writeFile('db.json', JSON.stringify(db, undefined, 4), server.close);
 					updateStatus = "I updated.";
+					fs.writeFile('db.json', JSON.stringify(db, undefined, 4), server.close);
 				}
-				return res.send("Yeah man. " + updateStatus);
+				return res.send("Yeah man." + updateStatus);
 			});
 	} else {
 		console.log("Request not verified.");
