@@ -50,32 +50,6 @@ app.get("/pico.min.css", function (req, res) {
 	res.sendFile(__dirname + "/pico.min.css");
 });
 
-// Use github webhooks for push requests so CappaBot can auto-update
-app.post("/github", verifyPostData, function (req, res) {
-	console.log("Request verified.");
-	exec("git pull", (error, stdout, stderr) => {
-		// Log the git output
-		console.log(stdout);
-
-		// Default to not updating
-		let updateStatus = "I didn't update.";
-
-		// Check if we actually need to update
-		if (!stdout == "Already up to date.\n") {
-			updateStatus = "I updated.";
-
-			// Write the database to storage for next time
-			if (db) {
-				fs.writeFile('db.json', JSON.stringify(db, undefined, 4), () => {server.close()});
-			} else {
-				console.log("Database lost?");
-			}
-		}
-		console.log(updateStatus);
-		return res.send("Yeah man." + updateStatus);
-	});
-});
-
 app.use("/github", (err, req, res, next) => {
 	if (err) console.error(err)
 	console.log("Prob not github here.")
@@ -123,6 +97,32 @@ function verifyPostData(req, res, next) {
 	
 	return true
 }*/
+
+// Use github webhooks for push requests so CappaBot can auto-update
+app.post("/github", verifyPostData, function (req, res) {
+	console.log("Request verified.");
+	exec("git pull", (error, stdout, stderr) => {
+		// Log the git output
+		console.log(stdout);
+
+		// Default to not updating
+		let updateStatus = "I didn't update.";
+
+		// Check if we actually need to update
+		if (!stdout == "Already up to date.\n") {
+			updateStatus = "I updated.";
+
+			// Write the database to storage for next time
+			if (db) {
+				fs.writeFile('db.json', JSON.stringify(db, undefined, 4), () => {server.close()});
+			} else {
+				console.log("Database lost?");
+			}
+		}
+		console.log(updateStatus);
+		return res.send("Yeah man." + updateStatus);
+	});
+});
 
 // Starting message
 console.log("----------------------------------------------------------------");
