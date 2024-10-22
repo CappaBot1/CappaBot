@@ -73,6 +73,10 @@ app.post("/github", function (req, res) {
 
 // Function used to verify if /github is being POSTed by the real github
 function verifyGithub(req) {
+	// Verifying message
+	console.log("----------------------------------------------------------------");
+	console.log("Verifying payload...");
+	
 	if (!req.headers['user-agent'].includes('GitHub-Hookshot')) {
 		return false;
 	}
