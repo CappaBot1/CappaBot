@@ -276,14 +276,10 @@ export async function handleInteraction(req, res) {
 
             // View suggestions button
             else if (custom_id == "view suggestions") {
-                console.log("Suggestions:", db.suggestions);
                 let suggestions = "Suggestions:";
                 for (let i = 0; i < db.suggestions.length; i ++) {
                     suggestions = `${suggestions}\n${i+1}) ${db.suggestions[i].title}\n        ${db.suggestions[i].description}`
                 }
-                console.log(suggestions);
-                console.log(db.suggestions[0]);
-                console.log(db.suggestions[0].title);
                 return res.send({
                     type: 7,
                     data: {
