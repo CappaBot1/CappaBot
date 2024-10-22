@@ -51,8 +51,8 @@ app.get("/pico.min.css", function (req, res) {
 });
 
 // Github and stuff
-const sigHeaderName = 'X-Hub-Signature-256'
-const sigHashAlg = 'sha256'
+const sigHeaderName = "X-Hub-Signature-256";
+const sigHashAlg = "sha256";
 
 app.use("/github", bodyParser.json({
 	verify: (req, res, buf, encoding) => {
