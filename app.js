@@ -64,29 +64,25 @@ app.use("/github", bodyParser.json({
 }));
 
 function verifyPostData(req, res, next) {
-	console.log("Github verification coming in???");
+	console.log("Something's posting to github...");
 
-	console.log("Request body:", req.rawBody);
 	if (!req.rawBody) {
-	  return next("Request body empty");
+	  return next("Request body empty.");
 	}
   
 	const sig = Buffer.from(req.get(sigHeaderName) || '', 'utf8');
-	console.log("Sig:", sig);
 	const hmac = crypto.createHmac(sigHashAlg, process.env.GITHUB_WEBHOOK_SECRET);
-	console.log("Hmac:", hmac);
 	const digest = Buffer.from(sigHashAlg + '=' + hmac.update(req.rawBody).digest('hex'), 'utf8');
-	console.log("Digest:", digest);
 	if (sig.length !== digest.length || !crypto.timingSafeEqual(digest, sig)) {
-		console.log("Request probably verified but idk");
+		console.log("Request verified.");
 	  	return next(`Request body digest (${digest}) did not match ${sigHeaderName} (${sig})`);
 	}
-	console.log("Request might have been verified but idk");
+	console.log("Request not verified.");
 	return next()
 }
 
 app.post("/github", verifyPostData, function (req, res) {
-	console.log("Request verified.");
+	// Pull from the github repo at https://github.com/CappaBot1/CappaBot
 	exec("git pull", (error, stdout, stderr) => {
 		// Log the git output
 		console.log(stdout);
@@ -105,6 +101,7 @@ app.post("/github", verifyPostData, function (req, res) {
 				console.log("Database lost?");
 			}
 		}
+		// Show the update status
 		console.log(updateStatus);
 		return res.send("Yeah man." + updateStatus);
 	});
@@ -112,7 +109,7 @@ app.post("/github", verifyPostData, function (req, res) {
 
 app.use("/github", (err, req, res, next) => {
 	if (err) console.error(err)
-	console.log("Prob not github here.")
+	console.log("Request body was not signed or verification failed.");
 	res.status(403).send("Request body was not signed or verification failed.");
 });
 
