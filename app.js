@@ -58,6 +58,7 @@ app.use("/github", (err, req, res, next) => {
 
 app.use("/github", bodyParser.json({
 	verify: (req, res, buf, encoding) => {
+		console.log("Makig raw body");
 		if (buf && buf.length) {
 			req.rawBody = "something or rather"//buf.toString(encoding || 'utf8');
 		}
