@@ -74,10 +74,10 @@ function verifyPostData(req, res, next) {
 	const hmac = crypto.createHmac(sigHashAlg, process.env.GITHUB_WEBHOOK_SECRET);
 	const digest = Buffer.from(sigHashAlg + '=' + hmac.update(req.rawBody).digest('hex'), 'utf8');
 	if (sig.length !== digest.length || !crypto.timingSafeEqual(digest, sig)) {
-		console.log("Request verified.");
+		console.log("Request not verified.");
 	  	return next(`Request body digest (${digest}) did not match ${sigHeaderName} (${sig})`);
 	}
-	console.log("Request not verified.");
+	console.log("Request verified.");
 	return next()
 }
 
