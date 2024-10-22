@@ -14,8 +14,8 @@ console.log("Starting Express App...");
 
 var server;
 
-// Load database
-export var db = JSON.parse(fs.readFileSync("db.json"), "utf8") // Import the database
+// Import and load database
+export var db = JSON.parse(fs.readFileSync("db.json"), "utf8")
 
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
