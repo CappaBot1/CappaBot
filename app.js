@@ -17,9 +17,6 @@ var server;
 // Load database
 export var db = JSON.parse(fs.readFileSync("db.json"), "utf8") // Import the database
 
-console.log("Database:", db);
-console.log("Suggestions:", db.suggestions);
-
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -64,7 +61,7 @@ app.post("/github", function (req, res) {
 					updateStatus = "I didn't update.";
 				} else {
 					updateStatus = "I updated.";
-					fs.writeFile('db.json', JSON.stringify(db, undefined, 4), server.close);
+					fs.writeFile('db.json', JSON.stringify(db, undefined, 4), () => {server.close()});
 				}
 				return res.send("Yeah man." + updateStatus);
 			});
