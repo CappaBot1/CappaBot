@@ -186,15 +186,7 @@ export async function handleInteraction(req, res) {
                     type: 4,
                     data: {
                         // Reply with the reaction
-                        content: "\
-To use the best command ever made (react) follow these instructions:\n\
-    1. Make sure you have me installed (use the /get command)\n\
-    2. Right click on the message you would like to react to\n\
-    3. Go to the \"apps\" dropdown\n\
-    4. Click the \"react\" command next to my pfp\n\
-    5. Wait for the image to load and enjoy!\n\
-You can try testing it out on this message now!\n\
-                        "
+                        content: "To use the best command ever made (react) follow these instructions:\n    1. Make sure you have me installed (use the /get command)\n    2. Right click on the message you would like to react to\n    3. Go to the \"apps\" dropdown\n    4. Click the \"react\" command next to my pfp\n    5. Wait for the image to load and enjoy!\nYou can try testing it out on this message now!"
                     }
                 });
             }
