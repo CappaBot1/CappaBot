@@ -68,7 +68,7 @@ function verifyPostData(req, res, next) {
 
 	console.log("Request body:", req.rawBody);
 	if (!req.rawBody) {
-	  return next('Request body empty');
+	  return next("Request body empty");
 	}
   
 	const sig = Buffer.from(req.get(sigHeaderName) || '', 'utf8');
