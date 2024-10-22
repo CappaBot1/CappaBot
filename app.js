@@ -77,7 +77,8 @@ function verifyGithub(req) {
 		return false;
 	}
 
-	const payload = JSON.stringify(req.payload);
+	const payload = req.payload;
+	console.log(req);
 	console.log(payload);
 	return true
 }
