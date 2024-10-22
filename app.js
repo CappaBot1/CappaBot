@@ -82,7 +82,7 @@ function verifyGithub(req) {
 		return false;
 	}
 
-	let payload = req
+	let payload = req;
 	console.log(JSON.stringify(payload, noCircular(payload)));
 	return true
 }
