@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import "dotenv/config";
 
 export async function DiscordRequest(method, endpoint, payload, logResponse) {
 	// Add the endpoint to the api url
@@ -55,4 +55,21 @@ export function bitField(bits) {
 		result += 1 << bits[i];
 	}
 	return result
+}
+
+// Stop circular objects
+export function noCircular(obj) {
+	var i = 0;
+	
+	return function(key, value) {
+	  if(i !== 0 && typeof(obj) === "object" && typeof(value) == "object" && obj == value) 
+		return "[Circular]"; 
+	  
+	  if(i >= 29) // seems to be a harded maximum of 30 serialized objects?
+		return "[Unknown]";
+	  
+	  ++i; // so we know we aren't using the original object anymore
+	  
+	  return value;  
+	}
 }

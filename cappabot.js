@@ -1,6 +1,6 @@
-import { register } from './commands.js'
-import { bitField } from './utils.js';
-import { db } from './app.js';
+import { register } from "./commands.js";
+import { bitField } from "./utils.js";
+import { db } from "./app.js";
 
 // Ping command interaction response
 function pingCommand(res) {
@@ -180,6 +180,25 @@ export async function handleInteraction(req, res) {
                 });
             }
 
+            // "how" command
+            else if (name == "how") {
+                return res.send({
+                    type: 4,
+                    data: {
+                        // Reply with the reaction
+                        content: "\
+To use the best command ever made (`react`) follow these instructions:\n\
+> 1. Make sure you have me installed (use the `/get` command)\n\
+> 2. Right click on the **message** you would like to react to\n\
+> 3. Go to the `apps` dropdown\n\
+> 4. Click the `react` command next to my pfp\n\
+> 5. Wait for the image to load and enjoy!\n\
+You can try testing it out on this message now!\
+                        "
+                    }
+                });
+            }
+
             console.error(`unknown command: ${name}`);
             return res.status(400).json({ error: 'unknown command' });
         }
@@ -265,10 +284,9 @@ export async function handleInteraction(req, res) {
 
             // View suggestions button
             else if (custom_id == "view suggestions") {
-                console.log("Suggestions:", db.suggestions);
                 let suggestions = "Suggestions:";
                 for (let i = 0; i < db.suggestions.length; i ++) {
-                    suggestions = `${suggestions}\n${i+1}) ${suggestions[i].title}\n        ${suggestions[i].description}`
+                    suggestions = `${suggestions}\n${i+1}) ${db.suggestions[i].title}\n        ${db.suggestions[i].description}`
                 }
                 return res.send({
                     type: 7,
@@ -284,14 +302,13 @@ export async function handleInteraction(req, res) {
 
         // Modal submits
         else if (type == 5) {
-            console.log("Data:", data);
             const { custom_id, components } = data;
-            console.log("Components:", components);
+
+            // Get all of the inputs from the modal
             let inputs = [];
             let input = "";
             for (let i = 0; i < 5; i ++) {
                 try {
-                    console.log("Component", i + ":", components[i].components[0].value);
                     input = components[i].components[0].value;
                 } catch {
                     input = "";
@@ -299,8 +316,6 @@ export async function handleInteraction(req, res) {
                     inputs.push(input);
                 }
             }
-
-            console.log(inputs);
 
             // The testing modal
             if (custom_id == "test modal submit") {

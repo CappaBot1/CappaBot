@@ -15,6 +15,7 @@
   "author": "Casper Howse",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.20.3",
     "cappa-bot": "file:",
     "discord-interactions": "^4.0.0",
     "dotenv": "^16.0.3",
