@@ -56,9 +56,9 @@ const sigHashAlg = "sha256";
 
 app.use("/github", bodyParser.json({
 	verify: (req, res, buf, encoding) => {
-		console.log("Makig raw body");
+		console.log("Making raw body");
 		if (buf && buf.length) {
-			req.rawBody = "something or rather"//buf.toString(encoding || 'utf8');
+			req.rawBody = buf.toString(encoding || 'utf8');
 		}
 	}
 }));
