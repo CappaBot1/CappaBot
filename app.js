@@ -91,7 +91,7 @@ app.use("/github", bodyParser.json({
 }))
 
 function verifyPostData(req, res, next) {
-	console.log("Github verification coming in???")
+	console.log("Github verification coming in???");
 
 	if (!req.rawBody) {
 	  return next('Request body empty');
