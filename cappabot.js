@@ -279,7 +279,7 @@ export async function handleInteraction(req, res) {
                 console.log("Suggestions:", db.suggestions);
                 let suggestions = "Suggestions:";
                 for (let i = 0; i < db.suggestions.length; i ++) {
-                    suggestions = `${suggestions}\n${i+1}) ${suggestions[i].title}\n        ${suggestions[i].description}`
+                    suggestions = `${suggestions}\n${i+1}) ${db.suggestions[i].title}\n            ${db.suggestions[i].description}`
                 }
                 console.log(suggestions);
                 console.log(db.suggestions[0]);
@@ -298,9 +298,9 @@ export async function handleInteraction(req, res) {
 
         // Modal submits
         else if (type == 5) {
-            console.log("Data:", data);
             const { custom_id, components } = data;
-            console.log("Components:", components);
+
+            // Get all of the inputs from the modal
             let inputs = [];
             let input = "";
             for (let i = 0; i < 5; i ++) {
@@ -313,8 +313,6 @@ export async function handleInteraction(req, res) {
                     inputs.push(input);
                 }
             }
-
-            console.log(inputs);
 
             // The testing modal
             if (custom_id == "test modal submit") {
