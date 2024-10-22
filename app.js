@@ -1,13 +1,13 @@
-import 'dotenv/config';
-import express from 'express';
-import { exec } from 'child_process'
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import { verifyKeyMiddleware } from 'discord-interactions';
-import fs from 'node:fs';
+import "dotenv/config";
+import express from "express";
+import { exec } from "child_process";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import { verifyKeyMiddleware } from "discord-interactions";
+import fs from "node:fs";
 
-import { handleInteraction } from './cappabot.js';
-import { noCircular } from './utils.js';
+import { handleInteraction } from "./cappabot.js";
+import { noCircular } from "./utils.js";
 
 // Starting message
 console.log("----------------------------------------------------------------");

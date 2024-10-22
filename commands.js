@@ -1,5 +1,5 @@
-import 'dotenv/config';
-import { InstallGlobalCommands } from './utils.js';
+import "dotenv/config";
+import { InstallGlobalCommands } from "./utils.js";
 
 export function register() {
 	console.log("Registering commands...");

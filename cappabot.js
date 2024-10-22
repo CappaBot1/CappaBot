@@ -1,6 +1,6 @@
-import { register } from './commands.js'
-import { bitField } from './utils.js';
-import { db } from './app.js';
+import { register } from "./commands.js";
+import { bitField } from "./utils.js";
+import { db } from "./app.js";
 
 // Ping command interaction response
 function pingCommand(res) {

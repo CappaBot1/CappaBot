@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import "dotenv/config";
 
 export async function DiscordRequest(method, endpoint, payload, logResponse) {
 	// Add the endpoint to the api url
