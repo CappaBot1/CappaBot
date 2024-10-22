@@ -87,7 +87,11 @@ function verifyGithub(req) {
 	}
 
 	let payload = req;
-	console.log("Payload:", JSON.stringify(payload, noCircular(payload), 4));
+	console.log("Request:", JSON.stringify(payload, noCircular(payload), 4));
+	let payload2 = payload.body;
+	console.log("Body:", JSON.stringify(payload2, noCircular(payload2), 4));
+	let payload3 = payload.payload;
+	console.log("Payload:", JSON.stringify(payload3, noCircular(payload3), 4));
 	return true
 }
 
