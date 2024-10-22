@@ -7,6 +7,7 @@ import { verifyKeyMiddleware } from 'discord-interactions';
 import fs from 'node:fs';
 
 import { handleInteraction } from './cappabot.js';
+import { noCircular } from './utils.js';
 
 // Starting message
 console.log("----------------------------------------------------------------");
@@ -81,7 +82,7 @@ function verifyGithub(req) {
 		return false;
 	}
 
-	console.log(req);
+	console.log(JSON.stringify(req, noCircular(b)));
 	return true
 }
 
