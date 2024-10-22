@@ -31,6 +31,10 @@ export function register() {
 		{
 			name: "get",
 			description: "Add this bot to your server/user and also get information about it"
+		},
+		{
+			name: "how",
+			description: "Show a helpful tutorial message on how to use the most popular command. \"react\""
 		}
 	];
 	

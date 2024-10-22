@@ -180,6 +180,23 @@ export async function handleInteraction(req, res) {
                 });
             }
 
+            // "how" command
+            else if (name == "how") {
+                return res.send({
+                    type: 4,
+                    data: {
+                        // Reply with the reaction
+                        content: "To use the best command ever made (react) follow these instructions:\
+                            1. Make sure you have me installed (use the /get command)\
+                            2. Right click on the message you would like to react to\
+                            3. Go to the \"apps\" dropdown\
+                            4. Click the \"react\" command next to my pfp\
+                            5. Wait for the image to load and enjoy!\
+                        You can try testing it out on this message now!"
+                    }
+                });
+            }
+
             console.error(`unknown command: ${name}`);
             return res.status(400).json({ error: 'unknown command' });
         }
