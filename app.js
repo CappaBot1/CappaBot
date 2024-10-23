@@ -19,7 +19,8 @@ export var db = JSON.parse(fs.readFileSync("db.json"), "utf8");
 
 // Save db function
 export function saveDB(callback) {
-	fs.writeFile("db.json", JSON.stringify(db, undefined, 4), callback);
+	if (callback) fs.writeFile("db.json", JSON.stringify(db, undefined, 4), callback);
+	else fs.writeFile("db.json", JSON.stringify(db, undefined, 4));
 }
 
 // Make a fake __dirname
