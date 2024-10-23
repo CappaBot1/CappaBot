@@ -20,6 +20,11 @@ var server;
 // Import and load database
 export var db = JSON.parse(fs.readFileSync("db.json"), "utf8");
 
+// Save db function
+export function saveDB(callback) {
+	fs.writeFile("db.json", JSON.stringify(db, undefined, 4), callback);
+}
+
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -96,7 +101,7 @@ app.post("/github", verifyPostData, function (req, res) {
 
 			// Write the database to storage for next time
 			if (db) {
-				fs.writeFile('db.json', JSON.stringify(db, undefined, 4), () => {server.close()});
+				saveDB(() => {server.close()});
 			} else {
 				console.log("Database lost?");
 			}

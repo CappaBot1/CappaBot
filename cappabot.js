@@ -1,6 +1,6 @@
 import { register } from "./commands.js";
 import { bitField } from "./utils.js";
-import { db } from "./app.js";
+import { db, saveDB } from "./app.js";
 
 // Ping command interaction response
 function pingCommand(res) {
@@ -54,7 +54,7 @@ export async function handleInteraction(req, res) {
         // Slash command requests
         if (type == 2) {
             // Get the slash command name
-            const { name } = data;
+            let { name } = data;
 
             // Log name
             console.log("Name:", name);
@@ -92,17 +92,37 @@ export async function handleInteraction(req, res) {
                 });
             }
 
-            // "update" command
-            else if (name == "update") {
-                let message = "You're not the owner 🤬";
+            // "manage" command
+            else if (name == "manage") {
                 if (body.user.username == "cappabot") {
-                    message = "It probably worked idk";
-                    register();
+                    return res.send({
+                        type: 4,
+                        data: {
+                            content: "\"Dashboard\"",
+                            components: [
+                                {
+                                    type: 1,
+                                    components: [
+                                        {
+                                            type: 2,
+                                            label: "Update",
+                                            custom_id: "manage_update"
+                                        },
+                                        {
+                                            type: 2,
+                                            label: "Save db",
+                                            custom_id: "manage_save"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    })
                 }
                 return res.send({
                     type: 4,
                     data: {
-                        content: message,
+                        content: "You're not the owner 🤬",
                         flags: bitField(6)
                     }
                 })
@@ -206,15 +226,44 @@ You can try testing it out on this message now!\
         // Component interactions
         else if (type == 3) {
             // Get the ID of the component interaction
-            const { custom_id } = data;
+            let { name } = data;
 
             // The ping again button
-            if (custom_id == "ping again") {
+            if (name == "ping again") {
                 return pingCommand(res);
             }
 
+            // All of the manage buttons
+            else if (name[0,5] == "manage") {
+                // Split the name of the command up
+                name = name.split("_", 1)[1]
+                console.log("Managing:", name)
+
+                // The update button will update the bots commands
+                if (name == "update") {
+                    register();
+                    return res.send({
+                        type: 7,
+                        data: {
+                            content: "Probably `updated` idk"
+                        }
+                    })
+                }
+
+                // Save the database to storage
+                else if (name == "save") {
+                    saveDB();
+                    return res.send({
+                        type: 7,
+                        data: {
+                            content: "Probably `saved db` idk"
+                        }
+                    })
+                }
+            }
+
             // Test message button
-            else if (custom_id == "test message") {
+            else if (name == "test message") {
                 return res.send({
                     type: 4,
                     data: {
@@ -225,7 +274,7 @@ You can try testing it out on this message now!\
             }
 
             // Test modal button
-            else if (custom_id == "test modal") {
+            else if (name == "test modal") {
                 return res.send({
                     type: 9,
                     data: {
@@ -248,7 +297,7 @@ You can try testing it out on this message now!\
             }
 
             // Add suggestion button
-            else if (custom_id == "add suggestion modal") {
+            else if (name == "add suggestion modal") {
                 return res.send({
                     type: 9,
                     data: {
@@ -283,7 +332,7 @@ You can try testing it out on this message now!\
             }
 
             // View suggestions button
-            else if (custom_id == "view suggestions") {
+            else if (name == "view suggestions") {
                 let suggestions = "Suggestions:";
                 for (let i = 0; i < db.suggestions.length; i ++) {
                     suggestions = `${suggestions}\n${i+1}) ${db.suggestions[i].title}\n        ${db.suggestions[i].description}`
@@ -296,13 +345,13 @@ You can try testing it out on this message now!\
                 });
             }
 
-            console.error(`unknown customID: ${custom_id}`);
-            return res.status(400).json({ error: 'unknown customID' });
+            console.error(`unknown name: ${name}`);
+            return res.status(400).json({ error: 'unknown name' });
         }
 
         // Modal submits
         else if (type == 5) {
-            const { custom_id, components } = data;
+            let { name, components } = data;
 
             // Get all of the inputs from the modal
             let inputs = [];
@@ -318,7 +367,7 @@ You can try testing it out on this message now!\
             }
 
             // The testing modal
-            if (custom_id == "test modal submit") {
+            if (name == "test modal submit") {
                 // Send a message with what they inputted into the test text input
                 return res.send({
                     type: 4,
@@ -330,7 +379,7 @@ You can try testing it out on this message now!\
             }
 
             // The add suggestion modal
-            if (custom_id == "add suggestion") {
+            else if (name == "add suggestion") {
                 console.log("Adding suggestion:", inputs[0], inputs[1]);
                 // Add the suggestion
                 db.suggestions.push({"title": inputs[0], "description": inputs[1]});
@@ -346,8 +395,8 @@ You can try testing it out on this message now!\
                 });
             }
 
-            console.error("unknown customID:", custom_id);
-            return res.status(404).json({ error: 'unknown customID' });
+            console.error("unknown name:", name);
+            return res.status(404).json({ error: 'unknown name' });
         }
 
         console.error("unknown interaction type", type);

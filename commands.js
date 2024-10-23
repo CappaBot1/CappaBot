@@ -14,8 +14,8 @@ export function register() {
 			description: "Give some buttons for testing the bot"
 		},
 		{
-			name: "update",
-			description: "Update the global bot commands (owner only)",
+			name: "manage",
+			description: "Manage Cappa Bot (owner only)",
 			contexts: [1]
 		},
 		{
