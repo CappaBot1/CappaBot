@@ -101,18 +101,20 @@ export async function handleInteraction(req, res) {
                     return res.send({
                         type: 4,
                         data: {
-                            content: "\"Dashboard\"",
+                            content: "Dashboard",
                             components: [
                                 {
                                     type: 1,
                                     components: [
                                         {
                                             type: 2,
+                                            style: 2,
                                             label: "Update",
                                             custom_id: "manage_update"
                                         },
                                         {
                                             type: 2,
+                                            style: 2,
                                             label: "Save db",
                                             custom_id: "manage_save"
                                         }
