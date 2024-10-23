@@ -45,7 +45,7 @@ export async function handleInteraction(req, res) {
 
         //console.log(body);
 
-        console.log(`Got interaction of type: ${type}`);
+        console.log("Got interaction of type:", type);
 
         // Ping requests
         if (type == 1) {
@@ -232,22 +232,22 @@ You can try testing it out on this message now!\
         // Component interactions
         else if (type == 3) {
             // Get the ID of the component interaction
-            let { name } = data;
-            console.log("Component id name:", name);
+            let { custom_id } = data;
+            console.log("Component id name:", custom_id);
 
             // The ping again button
-            if (name == "ping again") {
+            if (custom_id == "ping again") {
                 return pingCommand(res);
             }
 
             // All of the manage buttons
-            else if (name.split("_", 1)[0] == "manage") {
+            else if (custom_id.split("_", 1)[0] == "manage") {
                 // Split the name of the command up
-                name = name.split("_", 1)[1]
-                console.log("Managing:", name)
+                custom_id = custom_id.split("_", 1)[1]
+                console.log("Managing:", custom_id)
 
                 // The update button will update the bots commands
-                if (name == "update") {
+                if (custom_id == "update") {
                     register();
                     return res.send({
                         type: 7,
@@ -258,7 +258,7 @@ You can try testing it out on this message now!\
                 }
 
                 // Save the database to storage
-                else if (name == "save") {
+                else if (custom_id == "save") {
                     saveDB();
                     return res.send({
                         type: 7,
@@ -270,7 +270,7 @@ You can try testing it out on this message now!\
             }
 
             // Test message button
-            else if (name == "test message") {
+            else if (custom_id == "test message") {
                 return res.send({
                     type: 4,
                     data: {
@@ -281,7 +281,7 @@ You can try testing it out on this message now!\
             }
 
             // Test modal button
-            else if (name == "test modal") {
+            else if (custom_id == "test modal") {
                 return res.send({
                     type: 9,
                     data: {
@@ -304,7 +304,7 @@ You can try testing it out on this message now!\
             }
 
             // Add suggestion button
-            else if (name == "add suggestion modal") {
+            else if (custom_id == "add suggestion modal") {
                 return res.send({
                     type: 9,
                     data: {
@@ -339,7 +339,7 @@ You can try testing it out on this message now!\
             }
 
             // View suggestions button
-            else if (name == "view suggestions") {
+            else if (custom_id == "view suggestions") {
                 let suggestions = "Suggestions:";
                 for (let i = 0; i < db.suggestions.length; i ++) {
                     suggestions = `${suggestions}\n${i+1}) ${db.suggestions[i].title}\n        ${db.suggestions[i].description}`
@@ -352,13 +352,13 @@ You can try testing it out on this message now!\
                 });
             }
 
-            console.error(`unknown name: ${name}`);
-            return res.status(400).json({ error: 'unknown name' });
+            console.error(`unknown customID: ${custom_id}`);
+            return res.status(400).json({ error: 'unknown customID' });
         }
 
         // Modal submits
         else if (type == 5) {
-            let { name, components } = data;
+            let { custom_id, components } = data;
 
             // Get all of the inputs from the modal
             let inputs = [];
@@ -374,7 +374,7 @@ You can try testing it out on this message now!\
             }
 
             // The testing modal
-            if (name == "test modal submit") {
+            if (custom_id == "test modal submit") {
                 // Send a message with what they inputted into the test text input
                 return res.send({
                     type: 4,
@@ -386,7 +386,7 @@ You can try testing it out on this message now!\
             }
 
             // The add suggestion modal
-            else if (name == "add suggestion") {
+            else if (custom_id == "add suggestion") {
                 console.log("Adding suggestion:", inputs[0], inputs[1]);
                 // Add the suggestion
                 db.suggestions.push({"title": inputs[0], "description": inputs[1]});
@@ -402,8 +402,8 @@ You can try testing it out on this message now!\
                 });
             }
 
-            console.error("unknown name:", name);
-            return res.status(404).json({ error: 'unknown name' });
+            console.error("unknown customID:", custom_id);
+            return res.status(404).json({ error: "unknown customID" });
         }
 
         console.error("unknown interaction type", type);
