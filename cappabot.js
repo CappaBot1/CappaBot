@@ -233,6 +233,7 @@ You can try testing it out on this message now!\
         else if (type == 3) {
             // Get the ID of the component interaction
             let { name } = data;
+            console.log("Component id name:", name);
 
             // The ping again button
             if (name == "ping again") {
