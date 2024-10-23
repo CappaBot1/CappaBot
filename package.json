@@ -9,8 +9,7 @@
     "node": ">=18.x"
   },
   "scripts": {
-    "start": "node app.js",
-    "register": "node commands.js"
+    "start": "node app.js"
   },
   "author": "Casper Howse",
   "license": "MIT",
@@ -20,5 +19,9 @@
     "discord-interactions": "^4.0.0",
     "dotenv": "^16.0.3",
     "express": "^4.21.0"
+  },
+  "nodemonConfig": {
+    "ignore": ["db.json"],
+    "ext": "*"
   }
 }
