@@ -240,7 +240,7 @@ You can try testing it out on this message now!\
             }
 
             // All of the manage buttons
-            else if (name[0,5] == "manage") {
+            else if (name.split("_", 1)[0] == "manage") {
                 // Split the name of the command up
                 name = name.split("_", 1)[1]
                 console.log("Managing:", name)
