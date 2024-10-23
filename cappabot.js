@@ -95,6 +95,7 @@ export async function handleInteraction(req, res) {
 
             // "manage" command
             else if (name == "manage") {
+                console.log("Getting manage command");
                 if (body.user.username == "cappabot") {
                     return res.send({
                         type: 4,
