@@ -1,8 +1,10 @@
 import "dotenv/config";
-import { InstallGlobalCommands } from "./utils.js";
 
-export function register() {
+import { discordRequest } from "./utils.js";
+
+export async function register() {
 	console.log("Registering commands...");
+
 	// Define all of the commands to show to the end user
 	const ALL_COMMANDS = [
 		{
@@ -37,8 +39,14 @@ export function register() {
 			description: "Show a helpful tutorial message on how to use the most popular command. \"react\""
 		}
 	];
+
+	// Register application commands globally
+	try {
+		// This is calling the bulk overwrite endpoint: https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands
+		await discordRequest("PUT", `/applications/${process.env.APP_ID}/commands`, ALL_COMMANDS);
+	} catch (err) {
+		console.error(err);
+	}
 	
-	// Register the commands
-	InstallGlobalCommands(ALL_COMMANDS);
 	console.log("Commands registered.");
 }

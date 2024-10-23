@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-export async function DiscordRequest(method, endpoint, payload, logResponse) {
+export async function discordRequest(method, endpoint, payload, logResponse) {
 	// Add the endpoint to the api url
 	const url = 'https://discord.com/api/v10' + endpoint;
 
@@ -31,17 +31,6 @@ export async function DiscordRequest(method, endpoint, payload, logResponse) {
 		return await res.json();
 	}
 	
-}
-
-// Install application commands globally
-export async function InstallGlobalCommands(commands) {
-	let appId = process.env.APP_ID
-	try {
-		// This is calling the bulk overwrite endpoint: https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands
-		await DiscordRequest("PUT", `/applications/${appId}/commands`, commands);
-	} catch (err) {
-		console.error(err);
-	}
 }
 
 // Make a bitfield from an array, number, or string of numbers

@@ -36,6 +36,7 @@ async function getReactionImage() {
 	return imageURLs[Math.floor(Math.random()*imageURLs.length)]
 }
 
+// The "brains" of Cappa Bot, handle interactions
 export async function handleInteraction(req, res) {
     try {
         // Interaction type and data

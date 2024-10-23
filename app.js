@@ -14,8 +14,6 @@ import { handleInteraction } from "./cappabot.js";
 console.log("----------------------------------------------------------------");
 console.log("Starting Express App...");
 
-var server;
-
 // Import and load database
 export var db = JSON.parse(fs.readFileSync("db.json"), "utf8");
 
@@ -32,6 +30,7 @@ const port = 6969;
 
 // Create an express app
 const app = express();
+var server;
 
 // Check if CappaBot is working
 app.get("/", function (req, res) {
