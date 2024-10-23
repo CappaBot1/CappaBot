@@ -9,7 +9,6 @@ import crypto from "crypto";
 import bodyParser from "body-parser"
 
 import { handleInteraction } from "./cappabot.js";
-import { noCircular } from "./utils.js";
 
 // Starting message
 console.log("----------------------------------------------------------------");
