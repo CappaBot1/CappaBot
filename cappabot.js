@@ -43,10 +43,6 @@ export async function handleInteraction(req, res) {
         const body = req.body;
         const { type, data } = body;
 
-        //console.log(body);
-
-        console.log("Got interaction of type:", type);
-
         // Ping requests
         if (type == 1) {
             return res.send({ type: 1 });
@@ -56,9 +52,6 @@ export async function handleInteraction(req, res) {
         if (type == 2) {
             // Get the slash command name
             let { name } = data;
-
-            // Log name
-            console.log("Name:", name);
 
             // "ping" command
             if (name == "ping") {
@@ -95,9 +88,8 @@ export async function handleInteraction(req, res) {
 
             // "manage" command
             else if (name == "manage") {
-                console.log("Getting manage command");
+                // Check if the person sending this command is the owner
                 if (body.user.username == "cappabot") {
-                    console.log("Owner is sending the comand!");
                     return res.send({
                         type: 4,
                         data: {
@@ -124,7 +116,7 @@ export async function handleInteraction(req, res) {
                         }
                     })
                 }
-                console.log("Someone who isn't the owner tried to use this command 🤬");
+                // Not the owner 🤬
                 return res.send({
                     type: 4,
                     data: {
@@ -233,7 +225,6 @@ You can try testing it out on this message now!\
         else if (type == 3) {
             // Get the ID of the component interaction
             let { custom_id } = data;
-            console.log("Component id name:", custom_id);
 
             // The ping again button
             if (custom_id == "ping again") {
@@ -244,7 +235,6 @@ You can try testing it out on this message now!\
             else if (custom_id.split("_")[0] == "manage") {
                 // Split the name of the command up
                 custom_id = custom_id.split("_").slice(1);
-                console.log("Managing:", custom_id);
 
                 // The update button will update the bots commands
                 if (custom_id == "update") {
@@ -387,7 +377,6 @@ You can try testing it out on this message now!\
 
             // The add suggestion modal
             else if (custom_id == "add suggestion") {
-                console.log("Adding suggestion:", inputs[0], inputs[1]);
                 // Add the suggestion
                 db.suggestions.push({"title": inputs[0], "description": inputs[1]});
                 
@@ -409,6 +398,6 @@ You can try testing it out on this message now!\
         console.error("unknown interaction type", type);
         return res.status(404).json({ error: "unknown interaction type" });
     } catch (err) {
-        console.log(err)
+        console.error(err)
     }
 }
