@@ -242,9 +242,12 @@ You can try testing it out on this message now!\
 
             // All of the manage buttons
             else if (custom_id.split("_", 1)[0] == "manage") {
+                console.log("blub", custom_id);
                 // Split the name of the command up
-                custom_id = custom_id.split("_", 1)[1]
-                console.log("Managing:", custom_id)
+                custom_id = custom_id.split("_", 1);
+                console.log(custom_id);
+                custom_id = custom_id[1];
+                console.log("Managing:", custom_id);
 
                 // The update button will update the bots commands
                 if (custom_id == "update") {
