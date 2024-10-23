@@ -97,6 +97,7 @@ export async function handleInteraction(req, res) {
             else if (name == "manage") {
                 console.log("Getting manage command");
                 if (body.user.username == "cappabot") {
+                    console.log("Owner is sending the comand!");
                     return res.send({
                         type: 4,
                         data: {
@@ -121,6 +122,7 @@ export async function handleInteraction(req, res) {
                         }
                     })
                 }
+                console.log("Someone who isn't the owner tried to use this command 🤬");
                 return res.send({
                     type: 4,
                     data: {
