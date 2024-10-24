@@ -34,7 +34,7 @@ var server;
 
 // Check if CappaBot is working
 app.get("/", function (req, res) {
-	return res.send("CappaBot is up 👍");
+	return res.send("Cappa Bot is up 👍");
 });
 
 // The website portion of CappaBot
