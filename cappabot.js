@@ -218,7 +218,7 @@ You can try testing it out on this message now!\
             }
 
             // I saw a message
-            else if (name == "how") {
+            else if (name == "message") {
                 return res.send({
                     type: 4,
                     data: {
