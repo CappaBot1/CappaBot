@@ -37,6 +37,10 @@ export async function register() {
 		{
 			name: "how",
 			description: "Show a helpful tutorial message on how to use the most popular command. \"react\""
+		},
+		{
+			name: "message",
+			description: "I saw a message"
 		}
 	];
 

@@ -217,6 +217,17 @@ You can try testing it out on this message now!\
                 });
             }
 
+            // I saw a message
+            else if (name == "how") {
+                return res.send({
+                    type: 4,
+                    data: {
+                        content: "Still working on this feature rn, check again later."
+                    },
+                    flags: bitField(6)
+                })
+            }
+
             console.error(`unknown command: ${name}`);
             return res.status(400).json({ error: 'unknown command' });
         }
