@@ -24,12 +24,13 @@ export async function discordRequest(method, endpoint, payload, logResponse) {
 		throw new Error(JSON.stringify(data));
 	}
 
+	let response = await res.json();
 	if (logResponse) {
-		console.log(await res.json())
+		console.log(response);
 	}
 	
 	// Return the response
-	return await res.json();
+	return response
 }
 
 // Make a bitfield from an array, number, or string of numbers
@@ -43,4 +44,9 @@ export function bitField(bits) {
 		result += 1 << bits[i];
 	}
 	return result
+}
+
+// Capitalize the first letter of a string
+function capitalizeFirstLetter(val) {
+    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
 }
