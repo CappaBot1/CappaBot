@@ -26,11 +26,10 @@ export async function discordRequest(method, endpoint, payload, logResponse) {
 
 	if (logResponse) {
 		console.log(await res.json())
-	} else {
-		// Return the response
-		return await res.json();
 	}
 	
+	// Return the response
+	return await res.json();
 }
 
 // Make a bitfield from an array, number, or string of numbers
