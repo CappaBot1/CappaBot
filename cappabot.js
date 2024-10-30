@@ -219,7 +219,7 @@ You can try testing it out on this message now!\
 
             // I saw a message
             else if (name == "message") {
-                console.log(data);
+                console.log(body);
                 return res.send({
                     type: 4,
                     data: {
