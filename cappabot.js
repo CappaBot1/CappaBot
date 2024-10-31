@@ -221,7 +221,9 @@ You can try testing it out on this message now!\
             else if (name == "message") {
                 console.log(body.user.id);
                 async () => {
+                    console.log("Doin thing");
                     let channel = await discordRequest("post", "/users/@me/channels", { recipient_id: body.user.id }, true);
+                    console.log("Channel:", channel);
                     console.log("ChannelID:", channel.id);
                     await discordRequest("post", `/channels/${channel.id}/messages`, { content: "I saw a mesasge" }, true);
                 }
