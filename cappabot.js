@@ -226,7 +226,7 @@ You can try testing it out on this message now!\
                 return res.send({
                     type: 4,
                     data: {
-                        content: "Still working on this feature rn, check again later.",
+                        content: "Check DM's",
                         flags: bitField(6)
                     }
                 });
