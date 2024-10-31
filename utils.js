@@ -59,7 +59,6 @@ export function getIDFromInteraction(body) {
 	try {
 		return body.member.user.id
 	} catch {
-		console.log("Body don't have thing:", body);
-		return "797563949204897893"
+		return body.author.id
 	}
 }
