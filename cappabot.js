@@ -219,14 +219,13 @@ You can try testing it out on this message now!\
 
             // I saw a message
             else if (name == "message") {
-                console.log(body);
-                async () => {
-                    console.log("Doin thing");
-                    let channel = await discordRequest("post", "/users/@me/channels", { recipient_id: "797563949204897893" }, true);
-                    console.log("Channel:", channel);
-                    console.log("ChannelID:", channel.id);
-                    await discordRequest("post", `/channels/${channel.id}/messages`, { content: "I saw a mesasge" }, true);
-                }
+                console.log(body.member.user.id);
+                
+                let channel = await discordRequest("post", "/users/@me/channels", { recipient_id: "797563949204897893" }, true);
+                console.log("Channel:", channel);
+                console.log("ChannelID:", channel.id);
+                discordRequest("post", `/channels/${channel.id}/messages`, { content: "I saw a mesasge" }, true);
+
                 return res.send({
                     type: 4,
                     data: {

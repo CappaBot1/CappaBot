@@ -24,6 +24,9 @@ export async function discordRequest(method, endpoint, payload, logResponse) {
 		throw new Error(JSON.stringify(data));
 	}
 
+	// If the response says it doesn't have a body, return nothing
+    if (res.status == 204) return {}
+
 	let response = await res.json();
 	if (logResponse) {
 		console.log(response);
