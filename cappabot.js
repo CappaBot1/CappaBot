@@ -1,5 +1,5 @@
 import { register } from "./commands.js";
-import { bitField } from "./utils.js";
+import { bitField, discordRequest } from "./utils.js";
 import { db, saveDB } from "./app.js";
 
 // Ping command interaction response
@@ -219,14 +219,19 @@ You can try testing it out on this message now!\
 
             // I saw a message
             else if (name == "message") {
-                console.log(body);
+                console.log(body.user.id);
+                async () => {
+                    let channel = await discordRequest("post", "/users/@me/channels", { recipient_id: body.user.id }, true);
+                    console.log("ChannelID:", channel.id);
+                    await discordRequest("post", `/channels/${channel.id}/messages`, { content: "I saw a mesasge" }, true);
+                }
                 return res.send({
                     type: 4,
                     data: {
-                        content: "Still working on this feature rn, check again later."
-                    },
-                    flags: bitField(6)
-                })
+                        content: "Still working on this feature rn, check again later.",
+                        flags: bitField(6)
+                    }
+                });
             }
 
             console.error(`unknown command: ${name}`);
