@@ -53,3 +53,13 @@ export function bitField(bits) {
 function capitalizeFirstLetter(val) {
     return String(val).charAt(0).toUpperCase() + String(val).slice(1);
 }
+
+// Get the user id of an interaction (works in DM and channel)
+function getIDFromInteraction(body) {
+	try {
+		return body.member.user.id
+	} catch {
+		console.log("Body don't have thing:", body);
+		return "797563949204897893"
+	}
+}

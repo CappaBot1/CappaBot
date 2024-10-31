@@ -1,5 +1,5 @@
 import { register } from "./commands.js";
-import { bitField, discordRequest } from "./utils.js";
+import { bitField, discordRequest, getIDFromInteraction } from "./utils.js";
 import { db, saveDB } from "./app.js";
 
 // Ping command interaction response
@@ -220,7 +220,7 @@ You can try testing it out on this message now!\
             // I saw a message
             else if (name == "message") {
                 // Send a message to the user that used the command
-                let channel = await discordRequest("post", "/users/@me/channels", { recipient_id: body.member.user.id }, true);
+                let channel = await discordRequest("post", "/users/@me/channels", { recipient_id: getIDFromInteraction(body) }, true);
                 discordRequest("post", `/channels/${channel.id}/messages`, { content: "I saw a mesasge" }, true);
 
                 return res.send({
