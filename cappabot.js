@@ -284,7 +284,7 @@ You can try testing it out on this message now!\
                     return res.send({
                         type: 7,
                         data: {
-                            content: JSON.stringify(db, undefined, 4)
+                            content: `\`\`\`js\n${JSON.stringify(db, undefined, 4)}\n\`\`\``
                         }
                     });
                 }
