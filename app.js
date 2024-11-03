@@ -42,6 +42,16 @@ app.get("/website", function (req, res) {
 	res.sendFile(__dirname + "/index.html");
 });
 
+// The terms of service for CappaBot
+app.get("/terms-of-service", function (req, res) {
+	res.sendFile(__dirname + "/terms-of-service.html");
+});
+
+// The privacy policy for CappaBot
+app.get("/privacy-policy", function (req, res) {
+	res.sendFile(__dirname + "/privacy-policy.html");
+});
+
 // Pico min stylesheet
 app.get("/pico.min.css", function (req, res) {
 	res.sendFile(__dirname + "/pico.min.css");
