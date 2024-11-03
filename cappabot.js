@@ -109,6 +109,12 @@ export async function handleInteraction(req, res) {
                                             style: 2,
                                             label: "Save db",
                                             custom_id: "manage_save"
+                                        },
+                                        {
+                                            type: 2,
+                                            style: 2,
+                                            label: "Show db",
+                                            custom_id: "manage_showdb"
                                         }
                                     ]
                                 }
@@ -269,6 +275,16 @@ You can try testing it out on this message now!\
                         type: 7,
                         data: {
                             content: "Probably `saved db` idk"
+                        }
+                    });
+                }
+
+                // Show the entire database
+                else if (custom_id == "showdb") {
+                    return res.send({
+                        type: 7,
+                        data: {
+                            content: JSON.stringify(db, undefined, 4)
                         }
                     });
                 }
