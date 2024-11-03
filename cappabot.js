@@ -114,7 +114,7 @@ export async function handleInteraction(req, res) {
                                 }
                             ]
                         }
-                    })
+                    });
                 }
                 // Not the owner 🤬
                 return res.send({
@@ -123,7 +123,7 @@ export async function handleInteraction(req, res) {
                         content: "You're not the owner 🤬",
                         flags: bitField(6)
                     }
-                })
+                });
             }
 
             // "get" command
@@ -156,7 +156,7 @@ export async function handleInteraction(req, res) {
                             ]
                         }]
                     }
-                })
+                });
             }
 
             // "react" command
@@ -259,7 +259,7 @@ You can try testing it out on this message now!\
                         data: {
                             content: "Probably `updated` idk"
                         }
-                    })
+                    });
                 }
 
                 // Save the database to storage
@@ -270,7 +270,7 @@ You can try testing it out on this message now!\
                         data: {
                             content: "Probably `saved db` idk"
                         }
-                    })
+                    });
                 }
             }
 
@@ -413,6 +413,6 @@ You can try testing it out on this message now!\
         console.error("unknown interaction type", type);
         return res.status(404).json({ error: "unknown interaction type" });
     } catch (err) {
-        console.error(err)
+        console.error(err);
     }
 }
