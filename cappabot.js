@@ -227,8 +227,8 @@ You can try testing it out on this message now!\
             else if (name == "message") {
                 // Send a message to the user that used the command
                 try {
-                    let channel = await discordRequest("post", "/users/@me/channels", { recipient_id: body.member.user.id }, true);
-                    discordRequest("post", `/channels/${channel.id}/messages`, { content: "I saw a mesasge" }, true);
+                    let channel = await discordRequest("post", "/users/@me/channels", { recipient_id: body.member.user.id });
+                    discordRequest("post", `/channels/${channel.id}/messages`, { content: "I saw a mesasge" });
                     return res.send({
                         type: 4,
                         data: {
@@ -371,7 +371,7 @@ You can try testing it out on this message now!\
             else if (custom_id == "view suggestions") {
                 let suggestions = "Suggestions:";
                 for (let i = 0; i < db.suggestions.length; i ++) {
-                    suggestions = `${suggestions}\n${i+1}) ${db.suggestions[i].title}\n        ${db.suggestions[i].description}`
+                    suggestions = `${suggestions}\n${i+1}) ${db.suggestions[i].title}\n        ${db.suggestions[i].description}`;
                 }
                 return res.send({
                     type: 7,

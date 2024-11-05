@@ -6,7 +6,7 @@ import { dirname } from "path";
 import { verifyKeyMiddleware } from "discord-interactions";
 import fs from "node:fs";
 import crypto from "crypto";
-import bodyParser from "body-parser"
+import bodyParser from "body-parser";
 
 import { handleInteraction } from "./cappabot.js";
 
@@ -85,7 +85,7 @@ function verifyPostData(req, res, next) {
 	  	return next(`Request body digest (${digest}) did not match ${sigHeaderName} (${sig})`);
 	}
 	console.log("Request verified.");
-	return next()
+	return next();
 }
 
 app.post("/github", verifyPostData, function (req, res) {
@@ -115,7 +115,7 @@ app.post("/github", verifyPostData, function (req, res) {
 });
 
 app.use("/github", (err, req, res, next) => {
-	if (err) console.error(err)
+	if (err) console.error(err);
 	console.log("Request body was not signed or verification failed.");
 	res.status(403).send("Request body was not signed or verification failed.");
 });

@@ -25,7 +25,7 @@ export async function discordRequest(method, endpoint, payload, logResponse) {
 	}
 
 	// If the response says it doesn't have a body, return nothing
-    if (res.status == 204) return {}
+    if (res.status == 204) return {};
 
 	let response = await res.json();
 	if (logResponse) {
@@ -33,7 +33,7 @@ export async function discordRequest(method, endpoint, payload, logResponse) {
 	}
 	
 	// Return the response
-	return response
+	return response;
 }
 
 // Make a bitfield from an array, number, or string of numbers
@@ -42,11 +42,11 @@ export function bitField(bits) {
 	if (typeof bits == "number") bits = bits.toString();
 	if (typeof bits == "string") bits = bits.split("");
 
-	let result = 0
+	let result = 0;
 	for (let i = 0; i < bits.length; i ++) {
 		result += 1 << bits[i];
 	}
-	return result
+	return result;
 }
 
 // Capitalize the first letter of a string
