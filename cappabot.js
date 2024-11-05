@@ -1,5 +1,5 @@
 import { register } from "./commands.js";
-import { bitField, discordRequest, getIDFromInteraction } from "./utils.js";
+import { bitField, discordRequest } from "./utils.js";
 import { db, saveDB } from "./app.js";
 
 // Ping command interaction response
