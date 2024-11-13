@@ -1,6 +1,6 @@
 import { register } from "./commands.js";
 import { bitField, discordRequest } from "./utils.js";
-import { db, saveDB, affirmation, getAffirmation } from "./app.js";
+import { db, saveDB } from "./app.js";
 
 // Ping command interaction response
 function pingCommand(res) {
@@ -35,6 +35,19 @@ async function getReactionImage() {
 
 	return imageURLs[Math.floor(Math.random()*imageURLs.length)]
 }
+
+// Get a nice affirmation :)
+async function getAffirmation() {
+	let newAffirmation = await fetch("https://affirmations.dev");
+	newAffirmation = await newAffirmation.json();
+	newAffirmation = newAffirmation.affirmation;
+	console.log("Generated affirmation:", newAffirmation);
+	return newAffirmation;
+}
+
+// Initialize the affirmation
+var affirmation = getAffirmation();
+console.log("Init affirmation:", affirmation);
 
 // The "brains" of Cappa Bot, handle interactions
 export async function handleInteraction(req, res) {

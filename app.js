@@ -22,18 +22,6 @@ export function saveDB(callback) {
 	fs.writeFile("db.json", JSON.stringify(db, undefined, 4), callback ??= () => {console.log("Saved database.")});
 }
 
-// Get a nice affirmation :)
-export async function getAffirmation() {
-	let newAffirmation = await fetch("https://affirmations.dev");
-	newAffirmation = await newAffirmation.json();
-	newAffirmation = newAffirmation.affirmation;
-	console.log("Generated affirmation:", newAffirmation);
-	return newAffirmation;
-}
-
-// Initialize the affirmation
-export var affirmation = getAffirmation();
-
 // Make a fake __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
