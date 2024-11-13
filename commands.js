@@ -41,6 +41,10 @@ export async function register() {
 		{
 			name: "message",
 			description: "I saw a message"
+		},
+		{
+			name: "affirmation",
+			description: "Send an affirmation"
 		}
 	];
 
