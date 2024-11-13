@@ -262,7 +262,7 @@ You can try testing it out on this message now!\
             else if (name == "affirmation") {
                 // Send an affirmation
                 res.send({
-                    type: 3,
+                    type: 4,
                     data: {
                         content: affirmation
                     }
