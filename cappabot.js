@@ -43,7 +43,7 @@ async function getReactionImage() {
 async function getAffirmation() {
 	let affirmation = await fetch("https://affirmations.dev");
 	affirmation = await affirmation.json();
-	affirmation = affirmation.body.affirmaiton;
+	affirmation = affirmation.body.affirmation;
 	console.log("Generated affirmation:", affirmation);
 	return affirmation;
 }
