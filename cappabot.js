@@ -262,11 +262,11 @@ You can try testing it out on this message now!\
             // Affirmations
             else if (name == "affirmation") {
                 // Send an affirmation
-                console.log(affirmation);
+                console.log(await affirmation);
                 res.send({
                     type: 4,
                     data: {
-                        content: affirmation
+                        content: await affirmation
                     }
                 })
                 // Generate a new affirmation
