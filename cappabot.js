@@ -41,7 +41,6 @@ async function getAffirmation() {
 	let newAffirmation = await fetch("https://affirmations.dev");
 	newAffirmation = await newAffirmation.json();
 	newAffirmation = newAffirmation.affirmation;
-	console.log("Generated affirmation:", newAffirmation);
 	return newAffirmation;
 }
 
@@ -262,15 +261,14 @@ You can try testing it out on this message now!\
             // Affirmations
             else if (name == "affirmation") {
                 // Send an affirmation
-                console.log(await affirmation);
                 res.send({
                     type: 4,
                     data: {
                         content: await affirmation
                     }
-                })
+                });
                 // Generate a new affirmation
-                affirmation = getAffirmation()
+                affirmation = getAffirmation();
                 return;
             }
 
