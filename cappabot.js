@@ -41,11 +41,11 @@ async function getReactionImage() {
 
 // Get a nice affirmation :)
 async function getAffirmation() {
-	let affirmation = await fetch("https://affirmations.dev");
-	affirmation = await affirmation.json();
-	affirmation = affirmation.body.affirmation;
-	console.log("Generated affirmation:", affirmation);
-	return affirmation;
+	let newAffirmation = await fetch("https://affirmations.dev");
+	newAffirmation = await newAffirmation.json();
+	newAffirmation = newAffirmation.body.affirmation;
+	console.log("Generated affirmation:", newAffirmation);
+	return newAffirmation;
 }
 
 // The "brains" of Cappa Bot, handle interactions
