@@ -36,6 +36,18 @@ async function getReactionImage() {
 	return imageURLs[Math.floor(Math.random()*imageURLs.length)]
 }
 
+// Get a nice affirmation :)
+async function getAffirmation() {
+	let newAffirmation = await fetch("https://affirmations.dev");
+	newAffirmation = await newAffirmation.json();
+	newAffirmation = newAffirmation.affirmation;
+	return newAffirmation;
+}
+
+// Initialize the affirmation
+var affirmation = getAffirmation();
+console.log("Init affirmation:", affirmation);
+
 // The "brains" of Cappa Bot, handle interactions
 export async function handleInteraction(req, res) {
     try {
@@ -244,6 +256,20 @@ You can try testing it out on this message now!\
                         }
                     });
                 }
+            }
+
+            // Affirmations
+            else if (name == "affirmation") {
+                // Send an affirmation
+                res.send({
+                    type: 4,
+                    data: {
+                        content: await affirmation
+                    }
+                });
+                // Generate a new affirmation
+                affirmation = getAffirmation();
+                return;
             }
 
             console.error(`unknown command: ${name}`);
