@@ -26,7 +26,7 @@ export function saveDB(callback) {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Define app port
-const port = 585;
+const port = 3000;
 
 // Create an express app
 const app = express();
