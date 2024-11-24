@@ -46,7 +46,6 @@ async function getAffirmation() {
 
 // Initialize the affirmation
 var affirmation = getAffirmation();
-console.log("Init affirmation:", affirmation);
 
 // The "brains" of Cappa Bot, handle interactions
 export async function handleInteraction(req, res) {
