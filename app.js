@@ -37,26 +37,6 @@ app.get("/", function (req, res) {
 	return res.send("Cappa Bot is up 👍");
 });
 
-// The website portion of CappaBot
-app.get("/website", function (req, res) {
-	res.sendFile(__dirname + "/index.html");
-});
-
-// The terms of service for CappaBot
-app.get("/terms-of-service", function (req, res) {
-	res.sendFile(__dirname + "/terms-of-service.html");
-});
-
-// The privacy policy for CappaBot
-app.get("/privacy-policy", function (req, res) {
-	res.sendFile(__dirname + "/privacy-policy.html");
-});
-
-// Pico min stylesheet
-app.get("/pico.min.css", function (req, res) {
-	res.sendFile(__dirname + "/pico.min.css");
-});
-
 // Github and stuff
 const sigHeaderName = "X-Hub-Signature-256";
 const sigHashAlg = "sha256";
@@ -125,6 +105,10 @@ console.log("----------------------------------------------------------------");
 console.log("Starting CappaBot...");
 
 app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), handleInteraction);
+app.get("/interactions", (_req, res) {
+	console.log("Interactions get");
+	return res.send("gup (interactions are working)");
+})
 
 // Start the express app
 server = app.listen(port, () => {
