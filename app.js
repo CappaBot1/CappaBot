@@ -105,7 +105,7 @@ console.log("----------------------------------------------------------------");
 console.log("Starting CappaBot...");
 
 app.post("/interactions", verifyKeyMiddleware(process.env.PUBLIC_KEY), handleInteraction);
-app.get("/interactions", (_req, res) {
+app.get("/interactions", function (_req, res) {
 	console.log("Interactions get");
 	return res.send("gup (interactions are working)");
 })
