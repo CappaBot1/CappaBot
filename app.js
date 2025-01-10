@@ -1,6 +1,6 @@
 import fs from "node:fs";
 //import crypto from "node:crypto";
-import process from "node:process";
+//import process from "node:process";
 //import { exec } from "node:child_process";
 //import { Buffer } from "node:buffer";
 
@@ -127,7 +127,7 @@ console.log("Starting CappaBot...");
 
 app.post(
     "/interactions",
-    verifyKeyMiddleware(process.env.PUBLIC_KEY),
+    verifyKeyMiddleware(Deno.env.get("PUBLIC_KEY")),
     handleInteraction,
 );
 app.get("/interactions", function (_req, res) {

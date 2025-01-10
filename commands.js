@@ -1,6 +1,6 @@
 import process from "node:process";
 
-import "npm:dotenv/config";
+//import "npm:dotenv/config";
 
 import { discordRequest } from "./utils.js";
 
@@ -57,7 +57,7 @@ export async function register() {
         // This is calling the bulk overwrite endpoint: https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands
         await discordRequest(
             "PUT",
-            `/applications/${process.env.APP_ID}/commands`,
+            `/applications/${Deno.env.get("APP_ID")}/commands`,
             ALL_COMMANDS,
         );
     } catch (err) {

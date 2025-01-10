@@ -1,6 +1,6 @@
-import process from "node:process";
+//import process from "node:process";
 
-import "npm:dotenv/config";
+//import "npm:dotenv/config";
 
 export async function discordRequest(method, endpoint, payload, logResponse) {
     // Add the endpoint to the api url
@@ -13,7 +13,7 @@ export async function discordRequest(method, endpoint, payload, logResponse) {
     const res = await fetch(url, {
         method: method.toUpperCase(),
         headers: {
-            Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
+            Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}`,
             "Content-Type": "application/json",
         },
         ...payload,

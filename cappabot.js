@@ -1,7 +1,7 @@
 import { register } from "./commands.js";
 import { bitField, discordRequest } from "./utils.js";
 import { db, saveDB } from "./app.js";
-import process from "node:process";
+//import process from "node:process";
 
 // Ping command interaction response
 function pingCommand(res) {
@@ -159,7 +159,7 @@ export async function handleInteraction(req, res) {
                                     style: 5,
                                     label: "Add to server/user",
                                     url: "https://discord.com/oauth2/authorize?client_id=" +
-                                        process.env.APP_ID,
+                                        Deno.env.get("APP_ID"),
                                 },
                                 {
                                     type: 2,
