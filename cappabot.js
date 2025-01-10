@@ -1,50 +1,58 @@
 import { register } from "./commands.js";
 import { bitField, discordRequest } from "./utils.js";
 import { db, saveDB } from "./app.js";
+import process from "node:process";
 
 // Ping command interaction response
 function pingCommand(res) {
-	return res.send({
-		type: 4,
-		data: {
-			// Reply with pong and a button to ping again
-			content: "Pong!",
-			components: [{
-				type: 1,
-				components: [{
-					type: 2,
-					style: 1,
-					label: "Again!",
-					custom_id: "ping again"
-				}]
-			}]
-		}
-	});
+    return res.send({
+        type: 4,
+        data: {
+            // Reply with pong and a button to ping again
+            content: "Pong!",
+            components: [{
+                type: 1,
+                components: [{
+                    type: 2,
+                    style: 1,
+                    label: "Again!",
+                    custom_id: "ping again",
+                }],
+            }],
+        },
+    });
 }
 
 // Get a random reaction image from the https://github.com/CappaBot1/reactionImages github repo
 async function getReactionImage() {
-	let imageURLs = [];
-	const response = (await fetch("https://api.github.com/repos/CappaBot1/reactionImages/contents", {method: "GET"}));
-	
-	let repoContents = await response.json();
+    const imageURLs = [];
+    const response = await fetch(
+        "https://api.github.com/repos/CappaBot1/reactionImages/contents",
+        { method: "GET" },
+    );
 
-	for (let i = 0; i < repoContents.length; i ++) {
-		imageURLs.push("https://raw.githubusercontent.com/CappaBot1/reactionImages/refs/heads/main/" + repoContents[i].name);
-	}
+    const repoContents = await response.json();
 
-	return imageURLs[Math.floor(Math.random()*imageURLs.length)]
+    for (let i = 0; i < repoContents.length; i++) {
+        imageURLs.push(
+            "https://raw.githubusercontent.com/CappaBot1/reactionImages/refs/heads/main/" +
+                repoContents[i].name,
+        );
+    }
+
+    return imageURLs[Math.floor(Math.random() * imageURLs.length)];
 }
 
 // Get a nice affirmation :)
 async function getAffirmation() {
-	let newAffirmation = await fetch("https://affirmations.dev");
-	newAffirmation = await newAffirmation.json();
-	newAffirmation = newAffirmation.affirmation;
-	return newAffirmation;
+    let newAffirmation = await fetch("https://affirmations.dev");
+    newAffirmation = await newAffirmation.json();
+    newAffirmation = newAffirmation.affirmation;
+    return newAffirmation;
 }
 
 // Initialize the affirmation
+// deno-lint-ignore no-var
 var affirmation = getAffirmation();
 
 // The "brains" of Cappa Bot, handle interactions
@@ -62,14 +70,12 @@ export async function handleInteraction(req, res) {
         // Slash command requests
         if (type == 2) {
             // Get the slash command name
-            let { name } = data;
+            const { name } = data;
 
             // "ping" command
             if (name == "ping") {
                 return pingCommand(res);
-            }
-
-            // "test" command
+            } // "test" command
             else if (name == "test") {
                 return res.send({
                     type: 4,
@@ -83,21 +89,19 @@ export async function handleInteraction(req, res) {
                                     type: 2,
                                     style: 2,
                                     label: "Message",
-                                    custom_id: "test message"
+                                    custom_id: "test message",
                                 },
                                 {
                                     type: 2,
                                     style: 2,
                                     label: "Modal",
-                                    custom_id: "test modal"
-                                }
-                            ]
-                        }]
-                    }
+                                    custom_id: "test modal",
+                                },
+                            ],
+                        }],
+                    },
                 });
-            }
-
-            // "manage" command
+            } // "manage" command
             else if (name == "manage") {
                 // Check if the person sending this command is the owner
                 if (body.user.username == "cappabot") {
@@ -113,24 +117,24 @@ export async function handleInteraction(req, res) {
                                             type: 2,
                                             style: 2,
                                             label: "Update",
-                                            custom_id: "manage_update"
+                                            custom_id: "manage_update",
                                         },
                                         {
                                             type: 2,
                                             style: 2,
                                             label: "Save db",
-                                            custom_id: "manage_save"
+                                            custom_id: "manage_save",
                                         },
                                         {
                                             type: 2,
                                             style: 2,
                                             label: "Show db",
-                                            custom_id: "manage_showdb"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
+                                            custom_id: "manage_showdb",
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
                     });
                 }
                 // Not the owner 🤬
@@ -138,12 +142,10 @@ export async function handleInteraction(req, res) {
                     type: 4,
                     data: {
                         content: "You're not the owner 🤬",
-                        flags: bitField(6)
-                    }
+                        flags: bitField(6),
+                    },
                 });
-            }
-
-            // "get" command
+            } // "get" command
             else if (name == "get") {
                 return res.send({
                     type: 4,
@@ -156,38 +158,35 @@ export async function handleInteraction(req, res) {
                                     type: 2,
                                     style: 5,
                                     label: "Add to server/user",
-                                    url: "https://discord.com/oauth2/authorize?client_id=" + process.env.APP_ID
+                                    url: "https://discord.com/oauth2/authorize?client_id=" +
+                                        process.env.APP_ID,
                                 },
                                 {
                                     type: 2,
                                     style: 5,
                                     label: "Join the official server",
-                                    url: "https://discord.gg/HxThbHWG46"
+                                    url: "https://discord.gg/HxThbHWG46",
                                 },
                                 {
                                     type: 2,
                                     style: 5,
                                     label: "Check out the website",
-                                    url: "https://comic-python-topical.ngrok-free.app/website"
-                                }
-                            ]
-                        }]
-                    }
+                                    url: "https://comic-python-topical.ngrok-free.app/website",
+                                },
+                            ],
+                        }],
+                    },
                 });
-            }
-
-            // "react" command
+            } // "react" command
             else if (name == "react") {
                 return res.send({
                     type: 4,
                     data: {
                         // Reply with the reaction
-                        content: await getReactionImage()
-                    }
+                        content: await getReactionImage(),
+                    },
                 });
-            }
-
-            // "suggestions" command
+            } // "suggestions" command
             else if (name == "suggestions") {
                 return res.send({
                     type: 4,
@@ -201,21 +200,19 @@ export async function handleInteraction(req, res) {
                                     type: 2,
                                     style: 2,
                                     label: "Add suggestion",
-                                    custom_id: "add suggestion modal"
+                                    custom_id: "add suggestion modal",
                                 },
                                 {
                                     type: 2,
                                     style: 2,
                                     label: "View suggestions",
-                                    custom_id: "view suggestions"
-                                }
-                            ]
-                        }]
-                    }
+                                    custom_id: "view suggestions",
+                                },
+                            ],
+                        }],
+                    },
                 });
-            }
-
-            // "how" command
+            } // "how" command
             else if (name == "how") {
                 return res.send({
                     type: 4,
@@ -229,42 +226,44 @@ To use the best command ever made (`react`) follow these instructions:\n\
 > 4. Click the `react` command next to my pfp\n\
 > 5. Wait for the image to load and enjoy!\n\
 You can try testing it out on this message now!\
-                        "
-                    }
+                        ",
+                    },
                 });
-            }
-
-            // I saw a message
+            } // I saw a message
             else if (name == "message") {
                 // Send a message to the user that used the command
                 try {
-                    let channel = await discordRequest("post", "/users/@me/channels", { recipient_id: body.member.user.id });
-                    discordRequest("post", `/channels/${channel.id}/messages`, { content: "I saw a mesasge" });
+                    const channel = await discordRequest(
+                        "post",
+                        "/users/@me/channels",
+                        { recipient_id: body.member.user.id },
+                    );
+                    discordRequest("post", `/channels/${channel.id}/messages`, {
+                        content: "I saw a mesasge",
+                    });
                     return res.send({
                         type: 4,
                         data: {
                             content: "Check DM's",
-                            flags: bitField(6)
-                        }
+                            flags: bitField(6),
+                        },
                     });
                 } catch {
                     return res.send({
                         type: 4,
                         data: {
-                            content: "I saw a message"
-                        }
+                            content: "I saw a message",
+                        },
                     });
                 }
-            }
-
-            // Affirmations
+            } // Affirmations
             else if (name == "affirmation") {
                 // Send an affirmation
                 res.send({
                     type: 4,
                     data: {
-                        content: await affirmation
-                    }
+                        content: await affirmation,
+                    },
                 });
                 // Generate a new affirmation
                 affirmation = getAffirmation();
@@ -272,10 +271,8 @@ You can try testing it out on this message now!\
             }
 
             console.error(`unknown command: ${name}`);
-            return res.status(400).json({ error: 'unknown command' });
-        }
-
-        // Component interactions
+            return res.status(400).json({ error: "unknown command" });
+        } // Component interactions
         else if (type == 3) {
             // Get the ID of the component interaction
             let { custom_id } = data;
@@ -283,9 +280,7 @@ You can try testing it out on this message now!\
             // The ping again button
             if (custom_id == "ping again") {
                 return pingCommand(res);
-            }
-
-            // All of the manage buttons
+            } // All of the manage buttons
             else if (custom_id.split("_")[0] == "manage") {
                 // Split the name of the command up
                 custom_id = custom_id.split("_").slice(1);
@@ -296,45 +291,39 @@ You can try testing it out on this message now!\
                     return res.send({
                         type: 7,
                         data: {
-                            content: "Probably `updated` idk"
-                        }
+                            content: "Probably `updated` idk",
+                        },
                     });
-                }
-
-                // Save the database to storage
+                } // Save the database to storage
                 else if (custom_id == "save") {
                     saveDB();
                     return res.send({
                         type: 7,
                         data: {
-                            content: "Probably `saved db` idk"
-                        }
+                            content: "Probably `saved db` idk",
+                        },
                     });
-                }
-
-                // Show the entire database
+                } // Show the entire database
                 else if (custom_id == "showdb") {
                     return res.send({
                         type: 7,
                         data: {
-                            content: `\`\`\`js\n${JSON.stringify(db, undefined, 4)}\n\`\`\``
-                        }
+                            content: `\`\`\`js\n${
+                                JSON.stringify(db, undefined, 4)
+                            }\n\`\`\``,
+                        },
                     });
                 }
-            }
-
-            // Test message button
+            } // Test message button
             else if (custom_id == "test message") {
                 return res.send({
                     type: 4,
                     data: {
                         // Reply with a test message
-                        content: "Yup, the test message worked"
-                    }
+                        content: "Yup, the test message worked",
+                    },
                 });
-            }
-
-            // Test modal button
+            } // Test modal button
             else if (custom_id == "test modal") {
                 return res.send({
                     type: 9,
@@ -350,14 +339,12 @@ You can try testing it out on this message now!\
                                 label: "Test text",
                                 style: 1,
                                 placeholder: "Yeah, it worked",
-                                required: true
-                            }]
-                        }]
-                    }
+                                required: true,
+                            }],
+                        }],
+                    },
                 });
-            }
-
-            // Add suggestion button
+            } // Add suggestion button
             else if (custom_id == "add suggestion modal") {
                 return res.send({
                     type: 9,
@@ -373,8 +360,8 @@ You can try testing it out on this message now!\
                                     label: "Your suggestion",
                                     style: 1,
                                     placeholder: "Super cool suggestion name",
-                                    required: true
-                                }]
+                                    required: true,
+                                }],
                             },
                             {
                                 type: 1,
@@ -384,40 +371,38 @@ You can try testing it out on this message now!\
                                     label: "Description",
                                     style: 2,
                                     placeholder: "Add X because Y...",
-                                    required: false
-                                }]
-                            }
-                        ]
-                    }
+                                    required: false,
+                                }],
+                            },
+                        ],
+                    },
                 });
-            }
-
-            // View suggestions button
+            } // View suggestions button
             else if (custom_id == "view suggestions") {
                 let suggestions = "Suggestions:";
-                for (let i = 0; i < db.suggestions.length; i ++) {
-                    suggestions = `${suggestions}\n${i+1}) ${db.suggestions[i].title}\n        ${db.suggestions[i].description}`;
+                for (let i = 0; i < db.suggestions.length; i++) {
+                    suggestions = `${suggestions}\n${i + 1}) ${
+                        db.suggestions[i].title
+                    }\n        ${db.suggestions[i].description}`;
                 }
                 return res.send({
                     type: 7,
                     data: {
-                        content: suggestions
-                    }
+                        content: suggestions,
+                    },
                 });
             }
 
             console.error(`unknown customID: ${custom_id}`);
-            return res.status(400).json({ error: 'unknown customID' });
-        }
-
-        // Modal submits
+            return res.status(400).json({ error: "unknown customID" });
+        } // Modal submits
         else if (type == 5) {
-            let { custom_id, components } = data;
+            const { custom_id, components } = data;
 
             // Get all of the inputs from the modal
-            let inputs = [];
+            const inputs = [];
             let input = "";
-            for (let i = 0; i < 5; i ++) {
+            for (let i = 0; i < 5; i++) {
                 try {
                     input = components[i].components[0].value;
                 } catch {
@@ -434,24 +419,25 @@ You can try testing it out on this message now!\
                     type: 4,
                     data: {
                         // Reply with a message asking what to test
-                        content: "Test text inputted in modal: " + inputs[0]
-                    }
+                        content: "Test text inputted in modal: " + inputs[0],
+                    },
                 });
-            }
-
-            // The add suggestion modal
+            } // The add suggestion modal
             else if (custom_id == "add suggestion") {
                 // Add the suggestion
-                db.suggestions.push({"title": inputs[0], "description": inputs[1]});
-                
+                db.suggestions.push({
+                    "title": inputs[0],
+                    "description": inputs[1],
+                });
+
                 // Send an ephemeral thank you message
                 return res.send({
                     type: 4,
                     data: {
                         // Reply with an ephemeral message asking what to test
                         content: "Thank you for your submission!",
-                        flags: bitField(6)
-                    }
+                        flags: bitField(6),
+                    },
                 });
             }
 

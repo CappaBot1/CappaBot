@@ -1,0 +1,16 @@
+{
+    "tasks": {
+        "prod": "deno run --allow-net --allow-env --allow-read --allow-write=db.json app.js",
+        "dev": "deno run --watch='./*.js' --allow-net --allow-env --env-file=.env --allow-read --allow-write=db.json app.js"
+    },
+    "fmt": {
+        "indentWidth": 4,
+        "include": ["*.js", "*.ts"]
+    },
+    "imports": {
+        "body-parser": "npm:body-parser@^1.20.3",
+        "discord-interactions": "npm:discord-interactions@^4.0.0",
+        "dotenv": "npm:dotenv@^16.0.3",
+        "express": "npm:express"
+    }
+}
