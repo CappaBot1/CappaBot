@@ -1,7 +1,6 @@
 import { register } from "./commands.js";
 import { bitField, discordRequest } from "./utils.js";
 import { db, saveDB } from "./app.js";
-//import process from "node:process";
 
 // Ping command interaction response
 function pingCommand(res) {

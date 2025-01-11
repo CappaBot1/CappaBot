@@ -1,7 +1,3 @@
-//import process from "node:process";
-
-//import "npm:dotenv/config";
-
 export async function discordRequest(method, endpoint, payload, logResponse) {
     // Add the endpoint to the api url
     const url = "https://discord.com/api/v10" + endpoint;

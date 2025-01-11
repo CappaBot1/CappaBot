@@ -1,7 +1,3 @@
-import process from "node:process";
-
-//import "npm:dotenv/config";
-
 import { discordRequest } from "./utils.js";
 
 export async function register() {
